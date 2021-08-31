@@ -1,0 +1,105 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body
+{
+    /* background-color: rgb(113, 113, 212); */
+    background: -webkit-gradient(linear, left bottom, right top, from(#0050C8), to(#00FFBD)) fixed;
+    
+}
+
+
+
+.container
+{
+    width: 700px;
+	height: 750px;
+	background-color: whitesmoke;
+	border-radius: 30px;
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  	
+	margin: auto;
+}
+
+.container h1{
+    margin: 5px;
+    font-size: 50px;
+    margin-top: 60px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#form
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+
+#form input
+{
+    margin: 15px;
+    padding: 17px 90px;
+    border: none;
+    border-radius: 25px;
+    background-color: rgb(230, 230, 230);
+    text-align: center;
+    font-size: 19px;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    
+}
+
+#form input:hover
+{
+    width: 390px;
+    border-radius: 100px;
+    background-color: #0050C8;
+}
+
+#form input:focus  
+{
+    width: 390px;
+}
+
+#form input::placeholder
+{
+    text-align: center;
+    font-size: 17px;
+}
+
+#btn
+{
+    margin: 15px;
+    background-color: rgb(224, 224, 224);
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.5s;
+    font-size: 15px;
+    width: 150px;
+    
+}
+
+
+#btn:hover
+{
+    background-color: #81b3fd;
+    border-radius: 1000px;
+}
+
+
+
