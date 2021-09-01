@@ -29,8 +29,8 @@
 </style>
 <body>
     <?php
-        require "views/_navbar.php";
         require "views/_dbconnect.php";   
+        require "views/_navbar.php";
     ?>
     
 

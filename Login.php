@@ -6,6 +6,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $pincode = 
         // $sql = "SELECT * FROM `agent` WHERE name = '$email' AND password = '$password'";
         $sql = "SELECT * FROM `agent` WHERE name = '$email'";
         $result = mysqli_query($conn, $sql);

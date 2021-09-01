@@ -1,4 +1,6 @@
-
+<?php
+    session_start();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,11 +9,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome <?php echo $_SESSION['email'] ?></title>
+    <title>Welcome</title>
 </head>
 <style>
-.container
-{
+.container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -24,21 +25,31 @@
 
 <body>
     <?php
+    require 'views/_dbconnect.php';
     require 'views/_navbar.php';
-    require 'views/_dbconnect.php'
     ?>
 
     <div class="div">
         <div class="alert alert-success my-4" role="alert">
-            <h4 class="alert-heading">Well done! <?php echo $_SESSION['email'] ?></h4>
-            <p>Login Successfull</p>
+            <h4 class="alert-heading">Welcome!
+    <?php 
+        if (!isset($_SESSION['loggedin'])) {
+            echo "Guest";
+        }
+        else {
+            echo $_SESSION['email'];'
+            </h4>
+            <p>Login Successfull</p>';
+        }
+    ?>
+            
         </div>
     </div>
 
 
     <!-- Cards -->
-    <div class="container">        
-    <?php
+    <div class="container">
+        <?php
         $sql = "SELECT * FROM `categories`";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {

@@ -41,8 +41,12 @@
           while ($row = mysqli_fetch_assoc($result)){
               $shopname = $row['shop_name'];
               $shopaddress = $row['shop_address'];
+              $shopzip = $row['shop_zip'];
               echo '<h1 class="display-5 m-4"> ' . $shopname . ' </h1>';
-            }
+              echo '<h4 class="display-7 m-4"> ' . $shopaddress . ' </h4>';
+            }  
+
+            
       
       ?>
 
