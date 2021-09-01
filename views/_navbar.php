@@ -4,6 +4,7 @@
   }
   else{
     $loggin = false;
+    session_start();
   }
   
   
