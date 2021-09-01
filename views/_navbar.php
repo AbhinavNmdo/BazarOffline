@@ -35,16 +35,16 @@
           
           if (!$loggin) {
             echo '<li class="nav-item">
-              <a class="nav-link" href="/learnPHP/FullyFunctioningLogin/SignUp.php">SignUp</a>
+              <a class="nav-link" href="SignUp.php">SignUp</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/learnPHP/FullyFunctioningLogin/Login.php">Login</a>
+              <a class="nav-link" href="Login.php">Login</a>
             </li>';
           }
           
           if($loggin){
             echo '<li class="nav-item">
-              <a class="nav-link" href="/learnPHP/FullyFunctioningLogin/Logout.php">Logout</a>
+              <a class="nav-link" href="Logout.php">Logout</a>
             </li>';
             
             echo '<li class="nav-item">
