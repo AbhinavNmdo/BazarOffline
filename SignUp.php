@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     <h1 align="center" class="my-4">SignUp Here</h1>
     <div class="container my-4" id="div">
-        <form action="/learnPHP/FullyFunctioningLogin/SignUp.php" method="post">
+        <form action="SignUp.php" method="post">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="email">
