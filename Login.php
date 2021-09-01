@@ -18,7 +18,7 @@
                     session_start();
                     $_SESSION['email'] = $email;
                     $_SESSION['loggedin'] = true;
-                    header("location: Welcome.php");
+                    header("location: index.php");
                     
                 }
                 else{
