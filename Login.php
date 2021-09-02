@@ -18,7 +18,7 @@
                     session_start();
                     $_SESSION['email'] = $email;
                     $_SESSION['loggedin'] = true;
-                    header("location: index.php");
+                    header("location: Welcome.php");
                     
                 }
                 else{
@@ -41,14 +41,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login <?php 
-        if (!isset($_SESSION['loggedin'])) {
-            echo "Guest";
-        }
-        else {
-            echo $_SESSION['email'];
-        }
-    ?></title>
+    <title>Login</title>
 </head>
 <style>
 #div {
@@ -83,7 +76,7 @@
     ?>
     <h1 align="center" class="my-4">Login Here</h1>
     <div class="container my-4" id="div">
-        <form action="Login.php" method="post">
+        <form action="/learnPHP/FullyFunctioningLogin/Login.php" method="post">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="email">

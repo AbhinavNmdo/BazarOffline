@@ -1,9 +1,9 @@
 <!-- INSERT INTO `agent` (`name`, `password`, `cpassword`) VALUES ('Abhinav', 'asdfasdf', 'asdfsdf'); -->
 <?php
-$servername = "remotemysql.com";
-$username = "xfPaLAmTxD";
-$password= "vR5LH3oNBw";
-$database = "xfPaLAmTxD";
+$servername = "localhost";
+$username = "root";
+$password= "";
+$database = "user";
 
 // Connecting to Database
 $conn = mysqli_connect($servername, $username, $password, $database);

@@ -4,7 +4,6 @@
   }
   else{
     $loggin = false;
-    session_start();
   }
   
   
@@ -19,16 +18,7 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
       <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
   
-      <title>Welcome ';if (!isset($_SESSION['loggedin'])) {
-        echo "Guest";
-    }
-    else {
-        echo $_SESSION['email'];'
-        </h4>
-        <p>Login Successfull</p>';
-    }
-      
-      echo '</title>
+      <title>BazarOffline</title>
     </head>
     <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -40,7 +30,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+            <a class="nav-link active" aria-current="page" href="Welcome.php">Home</a>
           </li>
           <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,7 +68,7 @@
           }
         echo  '</ul>
         <form class="d-flex" action="Search.php" method="GET">
-          <input class="form-control me-2" type="search" name= "search" placeholder="Enter Pincode" aria-label="Search">
+          <input class="form-control me-2" type="search" name= "search" placeholder="Enter Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
       </div>
