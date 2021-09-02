@@ -14,12 +14,6 @@
     <title>Welcome</title>
 </head>
 <style>
-/* .container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}*/
-
 .div {
     margin: 5px 50px;
 }

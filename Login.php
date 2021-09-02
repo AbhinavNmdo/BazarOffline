@@ -76,7 +76,7 @@
     ?>
     <h1 align="center" class="my-4">Login Here</h1>
     <div class="container my-4" id="div">
-        <form action="/learnPHP/FullyFunctioningLogin/Login.php" method="post">
+        <form action="Login.php" method="post">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="email">
