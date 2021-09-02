@@ -1,4 +1,3 @@
-<!-- INSERT INTO `agent` (`name`, `password`, `cpassword`) VALUES ('Abhinav', 'asdfasdf', 'asdfsdf'); -->
 <?php
 $servername = "remotemysql.com";
 $username = "xfPaLAmTxD";
