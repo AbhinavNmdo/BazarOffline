@@ -6,7 +6,6 @@
     $loggin = false;
   }
   
-  
   echo '<!doctype html>
   <html lang="en">
     <head>
@@ -50,10 +49,7 @@
           
           if (!$loggin) {
             echo '<li class="nav-item">
-              <a class="nav-link" href="SignUp.php">SignUp</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Login.php">Login</a>
+              <a class="nav-link" href="Login.php">Shop Login</a>
             </li>';
           }
           
@@ -63,7 +59,7 @@
             </li>';
             
             echo '<li class="nav-item">
-              <a class="nav-link">' . $_SESSION['email']  . '</a>
+              <a class="nav-link">Welcome! ' . $_SESSION['username']  . '</a>
             </li>';
           }
         echo  '</ul>

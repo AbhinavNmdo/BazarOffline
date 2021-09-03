@@ -17,6 +17,10 @@
 .div {
     margin: 5px 50px;
 }
+
+#radius {
+    border-radius: 15px;
+}
 </style>
 
 <body>
@@ -25,20 +29,10 @@
     require 'views/_navbar.php';
     ?>
 
-    <div class="div">
-        <div class="alert alert-success my-4" role="alert">
-            <h4 class="alert-heading">Welcome!
-                <?php 
-        if (!isset($_SESSION['loggedin'])) {
-            echo "Guest";
-        }
-        else {
-            echo $_SESSION['email'];'
-            </h4>
-            <p>Login Successfull</p>';
-        }
-    ?>
-
+    <div class="container my-4">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Welcome!</h4>
+            <p>If you want the people in your local area to avail your services or use your products then you must focus on offline marketing. It gives you a wonderful opportunity to establish a good relationship with the people. This will increase customer loyalty.</p>
         </div>
     </div>
 
@@ -46,7 +40,7 @@
     <!-- Cards -->
     <div class="container">
         <div class="row">
-                <?php
+            <?php
                     $sql = "SELECT * FROM `categories`";
                     $result = mysqli_query($conn, $sql);
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -59,7 +53,7 @@
                             <img src="https://source.unsplash.com/1600x900/?'. $cat .'" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">'. $cat . '</h5>
-                                <p class="card-text">' . substr($desc, 0 , 100) . '...</p>
+                                <p class="card-text">' . substr($desc, 0 , 80) . '...</p>
                                 <a href="Categories.php?catid=' . $id . '" class="btn btn-primary">View ' . $cat . '</a>
                             </div>
                         </div>
@@ -68,6 +62,11 @@
                     }
                 ?>
         </div>
+    </div>
+    <div class="container">
+        <?php
+            require "views/_footer.php"
+        ?>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"

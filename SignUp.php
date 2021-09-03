@@ -3,12 +3,12 @@ $successAlert = false;
 $passerror = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     require 'views/_dbconnect.php';
-    $email = $_POST['email'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
     $cpassword = $_POST['cpassword'];
 
     // Checking the user is exist or not
-    $sql = "SELECT * FROM `agent` WHERE `name`='$email'";
+    $sql = "SELECT * FROM `agent` WHERE `name`='$username'";
     $result1 = mysqli_query($conn, $sql);
     $numexists = mysqli_num_rows($result1);
     if ($numexists > 0) {
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
     if (($password == $cpassword) && $exist == false){
         $hash = password_hash($password , PASSWORD_DEFAULT);
-        $sql = "INSERT INTO `agent` (`name`, `password`, `cpassword`) VALUES ('$email', '$hash', '$cpassword')";
+        $sql = "INSERT INTO `agent` (`agent_username`, `agent_password`, `agent_cpassword`) VALUES ('$username', '$hash', '$cpassword')";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             $successAlert = true;
@@ -76,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     <div class="container my-4" id="div">
         <form action="SignUp.php" method="post">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="email">
+                <label for="exampleInputEmail1" class="form-label">Username</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="username" aria-describedby="email">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>

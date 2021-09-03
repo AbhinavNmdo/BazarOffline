@@ -2,13 +2,6 @@
 
 <?php
     session_start();
-
-    if (!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] != true) {
-        header("location: Login.php");
-        exit;
-    }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,8 +40,8 @@
     <div class="container">
         <div class="row">
             <?php
-                $id = $_GET['catid'];
-                $sql = "SELECT * FROM `shops` WHERE `catid_shop` = $id";
+                $id2 = $_GET['catid'];
+                $sql = "SELECT * FROM `shopkeeper` WHERE `catshop_id` = $id2";
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
                     $shopid = $row['shop_id'];
@@ -75,6 +68,11 @@
             
             ?>
         </div>
+    </div>
+    <div class="container">
+        <?php
+            require "views/_footer.php"
+        ?>
     </div>
 </body>
 
