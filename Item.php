@@ -26,6 +26,8 @@ session_start();
     require "views/_dbconnect.php";
     require "views/_navbar.php";
     ?>
+
+    <!-- Shopkeeper Profile -->
     <?php
     $id = $_GET['shopid'];
     $sql = "SELECT * FROM `shopkeeper` WHERE `shop_id` = $id";
@@ -38,7 +40,6 @@ session_start();
             <div class="col-lg-4 m-4 responsive">
             <!-- <svg class="bd-placeholder-img rounded-circle responsive" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg> -->
             <img class="bd-placeholder-img rounded-circle responsive" src="https://source.unsplash.com/1600x900/?profile" alt="" width="200px" height="200px">
-        
             <h2 style="margin-top: 15px;">' . $shopname . '</h2>
             <p>' . $shopaddress . '</p>
             <hr>
@@ -47,6 +48,8 @@ session_start();
     }
     ?>
 
+
+    <!-- Displaying items of the shop -->
     <div class="container my-4">
         <div class="row">
             <?php
@@ -73,6 +76,8 @@ session_start();
             ?>
         </div>
     </div>
+
+    <!-- Footer -->
     <div class="container">
         <?php
         require "views/_footer.php"

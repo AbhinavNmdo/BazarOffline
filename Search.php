@@ -17,9 +17,13 @@
   }
 
   #heading1122 {
-    margin-left: 150px;
-    margin-top: 40px;
+    display: flex;
+    justify-content: left;
+    margin: 50px 0px;
+    margin-left: 10px;
+    align-items: center;
     font-size: 20px;
+    padding: 0%;
   }
 </style>
 
@@ -34,7 +38,7 @@
       $search = $_GET['search'];
       $sql32 = "SELECT * FROM `shopkeeper` WHERE MATCH (`shop_name`, `shop_zip`, `shop_address`, `shop_owner`) against ('$search')";
       $result32 = mysqli_query($conn, $sql32);
-      echo '<p id="heading1122">You Searched for "' . $search . '"</p>';
+      echo '<h2 id="heading1122">You Searched for "' . $search . '"</h2>';
       while ($row = mysqli_fetch_assoc($result32)) {
         $shoppin = $row['shop_zip'];
         $shopname = $row['shop_name'];

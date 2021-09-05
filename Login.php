@@ -45,7 +45,7 @@
 </head>
 <style>
 #div {
-    width: 500px;
+    width: 300px;
 }
 </style>
 
@@ -87,11 +87,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-    </div>
-    <div class="container">
-        <?php
-            require "views/_footer.php"
-        ?>
     </div>
 </body>
 

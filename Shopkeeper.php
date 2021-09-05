@@ -25,6 +25,19 @@ if ($method == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopkeeper</title>
+    <style>
+    .responsive
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    #form
+    {
+        width: 300px;
+    }
+    </style>
 </head>
 
 <body>
@@ -32,6 +45,8 @@ if ($method == "POST") {
     require "views/_dbconnect.php";
     require "views/_navbar.php";
     ?>
+
+    <!-- Profile for Shopkeepers -->
     <div class="container">
         <?php
         $get = $_GET['shopids'];
@@ -39,11 +54,23 @@ if ($method == "POST") {
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $shopname = $row['shop_name'];
-            echo '<h2 class="m-4">' . $shopname . '</h2>';
+            $shopaddress = $row['shop_address'];
+            $shopzip = $row['shop_zip'];
+            echo '<div class="container responsive">
+            <div class="col-lg-4 m-4 responsive">
+            <!-- <svg class="bd-placeholder-img rounded-circle responsive" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg> -->
+            <img class="bd-placeholder-img rounded-circle responsive" src="https://source.unsplash.com/1600x900/?profile" alt="" width="200px" height="200px">
+            <h2 style="margin-top: 15px;">' . $shopname . '</h2>
+            <p>' . $shopaddress . '</p>
+            <p>'.$shopzip.'</p>
+            <hr>
+          </div>
+            </div>';
         }
         ?>
     </div>
 
+    <!-- Security for shopkeepers -->
     <?php
     // $user = $_GET['shopids'];
     $sql = "SELECT * FROM `shopkeeper` WHERE `shop_id` = '$get'";
@@ -57,6 +84,8 @@ if ($method == "POST") {
     }
     ?>
 
+
+    <!-- Displaying items -->
     <div class="container">
         <div class="row">
             <?php
@@ -83,7 +112,9 @@ if ($method == "POST") {
         </div>
     </div>
 
-    <div class="container">
+
+    <!-- Insert Item form -->
+    <div class="container" id="form">
         <form action="<?php $_SERVER['REQUEST_URI'] ?>" method="post">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Item Name</label>
@@ -91,11 +122,22 @@ if ($method == "POST") {
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Description</label>
-                <input type="text" class="form-control" id="desc" name="itemdesc">
+                <input type="textarea" class="form-control" id="desc" name="itemdesc">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
+
+
+
+            <!-- We have to add delete item option and edit item option  -->
+
+
+
+
+
+    <!-- Footer -->
     <div class="container">
         <?php
             require "views/_footer.php"

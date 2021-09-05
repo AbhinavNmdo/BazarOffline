@@ -6,13 +6,17 @@
 
     $conn = mysqli_connect($servername, $username, $password, $database);
 
-    if (isset($_FILES['image'])){
-        $filename = $_FILES['image']['name'];
-        $filetmp = $_FILES['image']['tmp_name'];
-
-        $sql = "INSERT INTO `images` (`image`) VALUES ('$filename')";
+    if (isset($_POST)){
+        echo "<pre>", print_r($_FILES['profileImage']['name']);
+        $img = $_FILES['profileImage']['tmp_name'];
+        $sql = "INSERT INTO `images`(`image`) VALUES ('$img')";
         $result = mysqli_query($conn, $sql);
-        move_uploaded_file($filetmp, $result);
+        if (move_uploaded_file($img, $result)){
+            echo "Uploaded Successfully";
+        }
+        else {
+            echo "Failed";
+        }
     }
 ?>
 
@@ -25,8 +29,8 @@
     <title>Image</title>
 </head>
 <body>
-    <form action="" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image">
+    <form action="upload.php" method="POST" enctype="multipart/form-data">
+        <input type="file" name="profileImage" id="profileImage">
         <input type="submit">
     </form>
 </body>
