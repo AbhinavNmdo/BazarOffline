@@ -61,10 +61,10 @@
     </div>
   </div>
   <div class="container">
-        <?php
-            require "views/_footer.php"
-        ?>
-    </div>
+    <?php
+    require "views/_footer.php"
+    ?>
+  </div>
 </body>
 
 </html>

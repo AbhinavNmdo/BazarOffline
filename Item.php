@@ -8,25 +8,16 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" media="screen and (max-width: 1010px)" href="views/phone.css">
     <title>Items</title>
 </head>
 <style>
-    #name {
-        margin-left: 80px;
-    }
-
-    #mera {
-        display: flex;
-    }
-
-    #para {
-        margin-top: 50px;
-    }
-
-    #para p, h2 
+    .responsive
     {
-        margin-left: 50px;
-        width: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 </style>
 
@@ -43,19 +34,16 @@ session_start();
         $shopname = $row['shop_name'];
         $shopaddress = $row['shop_address'];
         $shopzip = $row['shop_zip'];
-        echo '<div class="container">
-            <div class="row m-4">
-                <div class="col-lg-4" id="mera">
-                  <img class="rounded-circle" src="https://source.unsplash.com/1600x900/?profile" alt="Generic placeholder image" width="250" height="250">
-                  <div id="para">
-                  <h2>'. $shopname.'</h2>
-                  <p>'.$shopaddress.'</p>
-                  <p>'.$shopzip.'</p>
-                  </div>
-                </div>
-              </div>
-              <hr>
-        </div>';
+        echo '<div class="container responsive">
+            <div class="col-lg-4 m-4 responsive">
+            <!-- <svg class="bd-placeholder-img rounded-circle responsive" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg> -->
+            <img class="bd-placeholder-img rounded-circle responsive" src="https://source.unsplash.com/1600x900/?profile" alt="" width="200px" height="200px">
+        
+            <h2 style="margin-top: 15px;">' . $shopname . '</h2>
+            <p>' . $shopaddress . '</p>
+            <hr>
+          </div>
+            </div>';
     }
     ?>
 
@@ -87,7 +75,7 @@ session_start();
     </div>
     <div class="container">
         <?php
-            require "views/_footer.php"
+        require "views/_footer.php"
         ?>
     </div>
 
