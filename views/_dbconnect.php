@@ -1,5 +1,5 @@
 <?php
-$servername = "http://sql6.freesqldatabase.com/";
+$servername = "sql6.freesqldatabase.com";
 $username = "sql6434961";
 $password= "lLD32M89PA";
 $database = "sql6434961";
