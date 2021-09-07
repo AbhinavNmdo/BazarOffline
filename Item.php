@@ -36,13 +36,17 @@ session_start();
         $shopname = $row['shop_name'];
         $shopaddress = $row['shop_address'];
         $shopzip = $row['shop_zip'];
+        $profile = $row['shop_image'];
+        $shoptiming = $row['shop_timing'];
         echo '<div class="container responsive">
             <div class="col-lg-4 m-4 responsive">
             <!-- <svg class="bd-placeholder-img rounded-circle responsive" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg> -->
-            <img class="bd-placeholder-img rounded-circle responsive" src="https://source.unsplash.com/1600x900/?profile" alt="" width="200px" height="200px">
+            <img class="bd-placeholder-img rounded-circle responsive" src="'.$profile.'" alt="" width="200px" height="200px">
             <h2 style="margin-top: 15px;">' . $shopname . '</h2>
             <p>' . $shopaddress . '</p>
+            <p class="card-text">Shop Timing : '. $shoptiming . '</p>
             <hr>
+
           </div>
             </div>';
     }

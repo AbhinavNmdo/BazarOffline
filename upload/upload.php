@@ -6,12 +6,13 @@
 
     $conn = mysqli_connect($servername, $username, $password, $database);
 
-    if (isset($_POST)){
-        echo "<pre>", print_r($_FILES['profileImage']['name']);
-        $img = $_FILES['profileImage']['tmp_name'];
+    if (isset($_POST['upload'])){
+        $target = basename($_FILES['profileImage']['name']);
+        $img = $_FILES['profileImage']['name'];
+        $img_tmp = $_FILES['profileImage']['tmp_name'];
         $sql = "INSERT INTO `images`(`image`) VALUES ('$img')";
         $result = mysqli_query($conn, $sql);
-        if (move_uploaded_file($img, $result)){
+        if (move_uploaded_file($img_tmp, $target)){
             echo "Uploaded Successfully";
         }
         else {
@@ -31,7 +32,7 @@
 <body>
     <form action="upload.php" method="POST" enctype="multipart/form-data">
         <input type="file" name="profileImage" id="profileImage">
-        <input type="submit">
+        <input type="submit" name="upload">
     </form>
 </body>
 </html>

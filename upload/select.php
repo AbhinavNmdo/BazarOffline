@@ -19,10 +19,12 @@
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)){
             $image = $row['image'];
-            echo '<img src="'.$image.'" alt="" style="width: 400px; height: 400px;">';
+            echo '<div class="container">
+            <img src="' . $row['image'] . '" style="width: 100px; height: 100px;">
+        </div>';
             
         }
     ?>
-    image
+    
 </body>
 </html>

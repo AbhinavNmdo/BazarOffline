@@ -30,7 +30,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+            <a class="nav-link active" aria-current="page" href="Welcome.php">Home</a>
           </li>
           <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,9 +38,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">';
 
-          $sql2 = "SELECT * FROM `categories`";
-          $result2 = mysqli_query($conn, $sql2);
-          while ($row = mysqli_fetch_assoc($result2)){
+          $sqllli = "SELECT * FROM `categories`";
+          $resultlli = mysqli_query($conn, $sqllli);
+          while ($row = mysqli_fetch_assoc($resultlli)){
             $id = $row['cat_id'];
             $categories = $row['cat_name'];
             echo '<li><a class="dropdown-item" href="Categories.php?catid=' . $id . '">'. $categories .'</a></li>';

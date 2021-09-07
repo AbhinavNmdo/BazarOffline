@@ -44,19 +44,15 @@
         $shopname = $row['shop_name'];
         $shopid = $row['shop_id'];
         $shopaddress = $row['shop_address'];
-        echo '<div class="col-md-6">
-        <div class="card mb-3 m-4">
-        <div class="row g-0">
-        <div class="col-md-4">
-            <img src="https://source.unsplash.com/600x715/?shops,jewelery" class="img-fluid rounded-start" alt="...">
-        </div>
-        <div class="col-md-8">
+        echo '<div class="col-md-4">
+        <div class="row-md-4 m-4">
+        <div class="card rounded-3">
+            <img src="https://source.unsplash.com/1600x900/?shops" class="card-img-top rounded-3" alt="Oops">
             <div class="card-body">
-            <h5 class="card-title">' . $shopname . '</h5>
-            <p class="card-text">' . $shopaddress . '</p>
+                <h5 class="card-title">'. $shopname . '</h5>
+                <p class="card-text">' . $shopaddress . '</p>
+                <a href="Item.php?shopid=' . $shopid . '" class="btn btn-primary">View Products</a>
             </div>
-            <a class="btn btn-primary mx-3 my-4" href="Item.php?shopid=' . $shopid . '">View Products</a>
-        </div>
         </div>
     </div>
     </div>';

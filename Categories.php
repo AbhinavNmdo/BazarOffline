@@ -25,6 +25,7 @@
             $id1 = $_GET['catid'];
             $sql = "SELECT * FROM `categories` WHERE `cat_id` = $id1";
             $result = mysqli_query($conn, $sql);
+            $cat = $row['cat_name'];
             while ($row = mysqli_fetch_assoc($result)) {
                 $cat = $row['cat_name'];
                 $desc = $row['cat_desc'];
@@ -47,19 +48,18 @@
                     $shopid = $row['shop_id'];
                     $shopname = $row['shop_name'];
                     $shopaddress = $row['shop_address'];
-                    echo '<div class="col-md-6">
-                    <div class="card mb-3 m-4">
-                    <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="https://source.unsplash.com/600x715/?shops,jewelery" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
+                    $profile = $row['shop_image'];
+                    $shoptiming = $row['shop_timing'];
+                    echo '<div class="col-md-4">
+                    <div class="row-md-4 m-4">
+                    <div class="card rounded-3">
+                        <img src="https://source.unsplash.com/1600x900/?'. $cat .'" class="card-img-top rounded-3" alt="Oops">
                         <div class="card-body">
-                        <h5 class="card-title">' . $shopname . '</h5>
-                        <p class="card-text">' . $shopaddress . '</p>
+                            <h5 class="card-title">'. $shopname . '</h5>
+                            <p class="card-text">' . $shopaddress . '</p>
+                            <p class="card-text">Timing: ' . $shoptiming . '</p>
+                            <a href="Item.php?shopid=' . $shopid . '" class="btn btn-primary">View Products</a>
                         </div>
-                        <a class="btn btn-primary mx-3 my-4" href="Item.php?shopid=' . $shopid .'">View Products</a>
-                    </div>
                     </div>
                 </div>
                 </div>';
