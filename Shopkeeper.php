@@ -1,10 +1,10 @@
 <?php
+ob_start();
 session_start();
 $ids = $_GET['shopids'];
 $success = false;
 $failed = false;
-?>
-<?php
+
 require "views/_dbconnect.php";
 // $method = $_SERVER['REQUEST_METHOD'];
 if (isset($_POST['add'])) {
@@ -25,8 +25,7 @@ if (isset($_POST['add'])) {
         }
     }
 }
-?>
-<?php
+
     if (isset($_POST['upload'])){
         $target = basename($_FILES['profile']['name']);
         $img_tmp = $_FILES['profile']['tmp_name'];
@@ -76,8 +75,7 @@ if (isset($_POST['add'])) {
     <?php
     require "views/_dbconnect.php";
     require "views/_navbar.php";
-    ?>
-    <?php
+    
         if ($success){
             echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
             <strong>Successfully Updated your Profile!</strong>
@@ -104,13 +102,14 @@ if (isset($_POST['add'])) {
             $shopaddress = $row['shop_address'];
             $shopzip = $row['shop_zip'];
             $profile = $row['shop_image'];
+            $shoptiming = $row['shop_timing'];
             echo '<div class="container responsive">
             <div class="col-lg-4 m-4 responsive">
-            <!-- <svg class="bd-placeholder-img rounded-circle responsive" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg> -->
             <img class="bd-placeholder-img rounded-circle responsive" src=" ' .$profile. ' " alt="" width="200px" height="200px">
             <h2 style="margin-top: 15px;">' . $shopname . '</h2>
-            <p>' . $shopaddress . '</p>
+            <p style="text-align: center;">' . $shopaddress . '</p>
             <p>'.$shopzip.'</p>
+            <p class="card-text">Shop Timing : '. $shoptiming . '</p>
             <hr>
             <a href="Profile.php?shopkeeperid='. $ids .'" class="btn btn-info">Update your profile or add Items</a>
             <br>
@@ -131,7 +130,7 @@ if (isset($_POST['add'])) {
         $active = $row['shop_username'];
         if ($_SESSION['username'] != $active) {
             header("location: Logout.php");
-            header("location: Login.php");
+            // header("location: Login.php");
         }
     }
     ?>
@@ -167,7 +166,8 @@ if (isset($_POST['add'])) {
     <!-- Footer -->
     <div class="container">
         <?php
-            require "views/_footer.php"
+            require "views/_footer.php";
+            ob_end_flush();
         ?>
     </div>
 </body>
