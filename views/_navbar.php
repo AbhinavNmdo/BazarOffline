@@ -40,7 +40,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+              <a class="nav-link active" aria-current="page" href="Welcome.php">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="About.php">About</a>
@@ -84,8 +84,8 @@
               echo '</ul>
             <form class="d-flex" action="Search.php" method="GET">
               <input class="form-control me-2" type="search" name="search"
-                placeholder="Enter Search" aria-label="Search" disabled>
-              <button class="btn btn-outline-success" type="submit" disabled>Search</button>
+                placeholder="Enter Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
           </div>
         </div>

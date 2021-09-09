@@ -53,8 +53,8 @@
         $shopaddress = $row['shop_address'];
         echo '<div class="col-md-4">
         <div class="row-md-4 m-4">
-        <div class="card rounded-3">
-            <img src="https://source.unsplash.com/1600x900/?shops" class="card-img-top rounded-3" alt="Oops">
+        <div class="card" style="border-radius: 15px; height: 370px;">
+            <img src="https://source.unsplash.com/1600x900/?shops" class="card-img-top" style="border-radius: 15px;" alt="Oops">
             <div class="card-body">
                 <h5 class="card-title">'. $shopname . '</h5>
                 <p class="card-text">' . $shopaddress . '</p>
