@@ -3,5 +3,5 @@
     session_unset();
     session_destroy();
     $login = false;
-    header("location: Welcome.php")
+    header("location: index.php")
 ?>
