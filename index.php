@@ -12,6 +12,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>Welcome</title>
+    <link rel="stylesheet" href="views/_Welcomestyle.css">
+    <link rel="stylesheet" media="screen and (max-width: 1100px)" href="views/_phone.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
 </head>
 <style>
 .div {
@@ -28,13 +31,23 @@
     require 'views/_dbconnect.php';
     require 'views/_navbar.php';
     ?>
+    <div id="header">
+        <div id="header2">
+            <h2 class="bazar">Welcome to BazarOffline.</h2>
+            <p class="bazar2">You can find shops and products near you.</p>
+        </div>
+    </div>
 
-    <div class="container my-4">
+    <div id="heading1">
+        <h2>Category</h2>
+    </div>
+
+    <!-- <div class="container my-4">
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Welcome!</h4>
             <p>If you want the people in your local area to avail your services or use your products then you must focus on offline marketing. It gives you a wonderful opportunity to establish a good relationship with the people. This will increase customer loyalty.</p>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- Cards -->
@@ -49,8 +62,8 @@
                         $desc = $row['cat_desc'];
                         echo '<div class="col-md-4">
                         <div class="row-md-4 m-4">
-                        <div class="card rounded-3">
-                            <img src="https://source.unsplash.com/1600x900/?'. $cat .'" class="card-img-top rounded-3" alt="Oops">
+                        <div class="card" style="height: 370px; border-radius: 15px;">
+                            <img src="https://source.unsplash.com/1600x900/?'. $cat .'" class="card-img-top" alt="Oops" style="border-radius: 15px;">
                             <div class="card-body">
                                 <h5 class="card-title">'. $cat . '</h5>
                                 <p class="card-text">' . substr($desc, 0 , 80) . '...</p>

@@ -1,5 +1,6 @@
 <?php
 $exist = false;
+$done = false;
 require "views/_dbconnect.php";
     if (isset($_POST['shopsubmit'])){
         $shopname = $_POST['nameofshop'];
@@ -11,21 +12,20 @@ require "views/_dbconnect.php";
         $cpass = $_POST['cpassword'];
         $category = $_POST['select'];
         $zip = $_POST['zip'];
-        // Image
-        $terget = basename($_FILES['profile']['name']);
-        $img = $_FILES['profile']['name'];
-        $tmp_name = $_FILES['profile']['tmp_name'];
-        $sql1 = "SELECT * FROM `shopkeeper` WHERE `shop_username` = '$username'";
-        $result1 = mysqli_query($conn, $sql1);
-        $num = mysqli_num_rows($result1);
-        if ($num==0){
-            $sql = "INSERT INTO `shopkeeper`(`catshop_id`, `shop_name`, `shop_owner`, `shop_username`, `shop_email`, `shop_address`, `shop_password`, `shop_cpassword`, `shop_zip`, `shop_image`) VALUES ('$category','$shopname','$ownername','$username','$shopemail','$shopaddress','$pass','$cpass','$zip', '$img')";
-            $result = mysqli_query($conn, $sql);
-            if (move_uploaded_file($tmp_name, $target)){
-                echo "Uploaded Successfully";
+        $shoptiming = $_POST['timing'];
+        $maplink = $_POST['map'];
+        
+        if(!empty($username11)){
+            $sql1 = "SELECT * FROM `shopkeeper` WHERE `shop_username` = '$username11'";
+            $result1 = mysqli_query($conn, $sql1);
+            $num = mysqli_num_rows($result1);
+            if ($num==0){
+                $sql = "INSERT INTO `shopkeeper`(`catshop_id`, `shop_name`, `shop_owner`, `shop_username`, `shop_email`, `shop_address`, `shop_password`, `shop_cpassword`, `shop_zip`, `shop_timing`, `shop_maps`) VALUES ('$category','$shopname','$ownername','$username11','$shopemail','$shopaddress','$pass','$cpass','$zip', '$shoptiming', '$maplink')";
+                $result = mysqli_query($conn, $sql);
+                $done = true;
             }
-            else {
-                echo "Failed";
+            else{
+                $exist = true;
             }
         }
         else{
@@ -34,11 +34,35 @@ require "views/_dbconnect.php";
 
         
     }
+
     if (isset($_POST['catsubmit'])){
         $catname = $_POST['catname'];
         $catdesc = $_POST['catdesc'];
-        $sql = "INSERT INTO `categories`(`cat_name`, `cat_desc`) VALUES ('$catname','$catdesc')";
-        $result = mysqli_query($conn, $sql);
+        if(!empty($catname) or !empty($catdesc)){
+            $sql = "INSERT INTO `categories`(`cat_name`, `cat_desc`) VALUES ('$catname','$catdesc')";
+            $result = mysqli_query($conn, $sql);
+        }
+        else{
+            $exist = true;
+        }
+    }
+
+    if(isset($_POST['agentsubmit'])){
+        $agentname = $_POST['agent_name'];
+        $agentusername = $_POST['agent_username'];
+        $agentemail = $_POST['agent_email'];
+        $agentaddress = $_POST['agent_address'];
+        $agentmobile = $_POST['agent_mobile'];
+        $agentpass = $_POST['agent_password'];
+        $agentcpass = $_POST['agent_cpassword'];
+
+        if(!empty($agentusername)){
+            $agentsql = "INSERT INTO `agent`(`agent_name`, `agent_username`, `agent_email`, `agent_address`, `agent_mobile`, `agent_password`, `agent_cpassword`) VALUES ('$agentname','$agentusername','$agentemail','$agentaddress','$agentmobile','$agentpass','$agentcpass')";
+            $resultagent = mysqli_query($conn, $agentsql);
+        }
+        else{
+            $exist = true;
+        }
     }
 
 ?>
@@ -54,7 +78,16 @@ require "views/_dbconnect.php";
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
 </head>
+<style>
+    *
+    {
+        font-family: 'Baloo Chettan 2', cursive;
+        scroll-behavior: smooth;
+    }
+
+</style>
 
 <body>
     <?php
@@ -64,7 +97,13 @@ require "views/_dbconnect.php";
     <?php
         if($exist){
             echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-            <strong>Failed!</strong> User already exist.
+            <strong>Failed!</strong>
+            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>";
+        }
+        if($done){
+            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+            <strong>Successfully Inserted!</strong>
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>";
         }
@@ -115,7 +154,7 @@ require "views/_dbconnect.php";
                         </div>
                         <div class="mb-3">
                             <label for="username11" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username11" name="username11">
+                            <input type="textarea" class="form-control" id="username11" name="username11">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
@@ -130,8 +169,8 @@ require "views/_dbconnect.php";
                             <input type="text" class="form-control" id="zip" name="zip">
                         </div>
                         <div class="mb-3">
-                            <label for="profile" class="form-label">Choose Profile</label>
-                            <input type="file" class="form-control" id="profile" name="profile">
+                            <label for="map" class="form-label">Paste Map link</label>
+                            <input type="text" class="form-control" id="map" name="map">
                         </div>
                         <div class="mb-3">
                             <label for="timing" class="form-label">Timing</label>
@@ -155,6 +194,42 @@ require "views/_dbconnect.php";
                     </form>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card rounded-3 m-4">
+                    <h2 style="margin: 20px;" align="center" class="m-4">Agent Registration</h2>
+                    <form class="m-4" action="<?php $_SERVER['REQUEST_URI'] ?>" method="POST">
+                        <div class="mb-3">
+                            <label for="agent_name" class="form-label">Agent Name</label>
+                            <input type="text" class="form-control" id="agent_name" name="agent_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="agent_username" name="agent_username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="agent_email" name="agent_email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="agent_address" name="agent_address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_mobile" class="form-label">Mobile</label>
+                            <input type="text" class="form-control" id="agent_mobile" name="agent_mobile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="agent_password" name="agent_password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_cpassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="agent_cpassword" name="agent_cpassword">
+                        </div>
+                        <button class="btn btn-primary" type="submit" name="agentsubmit">Submit</button>
+                    </form>
+                </div>    
+            </div>    
         </div>
     </div>
 

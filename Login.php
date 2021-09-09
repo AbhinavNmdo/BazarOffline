@@ -15,7 +15,10 @@
                     $login = true;
                     session_start();
                     $shopid = $row['shop_id'];
+                    $ownername = $row['shop_owner'];
+                    $_SESSION['ownername'] = $ownername;
                     $shopzip = $row['shop_zip'];
+                    $_SESSION['shopid'] = $shopid;
                     $_SESSION['username'] = $username;
                     $_SESSION['loggedin'] = true;
                     header("location: Shopkeeper.php?shopids=$shopid");
@@ -42,8 +45,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
 </head>
 <style>
+    *
+    {
+        font-family: 'Baloo Chettan 2', cursive;
+        scroll-behavior: smooth;
+    }
+
 #div {
     width: 300px;
 }

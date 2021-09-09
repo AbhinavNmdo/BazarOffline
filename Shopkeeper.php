@@ -48,20 +48,26 @@ if (isset($_POST['add'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopkeeper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
     <style>
-    .responsive
+    *
     {
+        font-family: 'Baloo Chettan 2', cursive;
+        scroll-behavior: smooth;
+    }
+  
+    .responsive {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
     }
-    #form
-    {
+
+    #form {
         width: 300px;
     }
-    .res
-    {
+
+    .res {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -107,16 +113,15 @@ if (isset($_POST['add'])) {
             <div class="col-lg-4 m-4 responsive">
             <img class="bd-placeholder-img rounded-circle responsive" src=" ' .$profile. ' " alt="" width="200px" height="200px">
             <h2 style="margin-top: 15px;">' . $shopname . '</h2>
-            <p style="text-align: center;">' . $shopaddress . '</p>
-            <p>'.$shopzip.'</p>
+            <p style="text-align: center;">' . $shopaddress.', '. $shopzip . '</p>
             <p class="card-text">Shop Timing : '. $shoptiming . '</p>
             <hr>
-            <a href="Profile.php?shopkeeperid='. $ids .'" class="btn btn-info">Update your profile or add Items</a>
+            <a href="Profile.php?shopkeeperid='. $ids .'" class="btn btn-info">Update Profile / Add Items</a>
             <br>
-            <br>
-          </div>
             </div>
-            <hr>';
+            </div>
+            <hr>
+            <h2 style="margin: 40px;" align="center">Products Available</h2>';
         }
         ?>
     </div>
@@ -140,29 +145,31 @@ if (isset($_POST['add'])) {
     <div class="container">
         <div class="row">
             <?php
-            // $getid = $_GET['shopids'];
             $sql = "SELECT * FROM `items` WHERE `itemshop_id` = $ids";
             $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 $itemname = $row['item_name'];
                 $itemdesc = $row['item_desc'];
                 $itemid = $row['item_id'];
+                
                 echo '<div class="col-md-4">
                     <div class="row-md-4 m-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://source.unsplash.com/1600x900/?'. $itemname .'" class="card-img-top" alt="...">
+                    <div class="card" style="height: 370px; border-radius: 15px;">
+                        <img src="https://source.unsplash.com/1600x900/?'. $itemname .'" class="card-img-top" alt="..." style="border-radius: 15px;">
                         <div class="card-body">
                             <h5 class="card-title">' . $itemname . '</h5>
-                            <p class="card-text">' . substr($itemdesc, 0, 100) . '...</p>
+                            <p class="card-text">' . substr($itemdesc, 0, 100) . '</p>
+                            <a class="btn btn-danger" href="DeleteItem.php?itemid='. $itemid .'">Delete Item</a>
+                        </form>
                         </div>
                     </div>
                 </div>
                 </div>';
+                
             }
             ?>
         </div>
     </div>
-
     <!-- Footer -->
     <div class="container">
         <?php

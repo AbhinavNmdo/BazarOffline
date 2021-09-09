@@ -26,7 +26,7 @@
     <title>BazarOffline</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <img src="Images/logo.png" alt="" style="width: 70px; margin-right:
           10px;">
@@ -42,22 +42,29 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="index.php">Home</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Categories
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">';
-                $sqllli = "SELECT * FROM `categories`";
-                $resultlli = mysqli_query($conn, $sqllli);
-                while ($row = mysqli_fetch_assoc($resultlli)){
-                $id = $row['cat_id'];
-                $categories = $row['cat_name'];
-                echo '<li><a class="dropdown-item" href="Categories.php?catid='
-                    . $id . '">'. $categories .'</a></li>';
-                }
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="About.php">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="Contact.php">Contact Us</a>
+            </li>';
+            // <li class="nav-item dropdown">
+            //   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+            //     role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            //     Categories
+            //   </a>
+              // Category Dropdown Section
+              // <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              //   $sqllli = "SELECT * FROM `categories`";
+              //   $resultlli = mysqli_query($conn, $sqllli);
+              //   while ($row = mysqli_fetch_assoc($resultlli)){
+              //   $id = $row['cat_id'];
+              //   $categories = $row['cat_name'];
+              //   echo '<li><a class="dropdown-item" href="Categories.php?catid='
+              //       . $id . '">'. $categories .'</a></li>';
+              //   }
 
-                echo '</ul>';
+              //   echo '</ul>';
 
               if (!$loggin) {
               echo '<li class="nav-item">
@@ -69,16 +76,16 @@
               echo '<li class="nav-item">
                 <a class="nav-link" href="Logout.php">Logout</a>
               </li>';
-
+              
               echo '<li class="nav-item">
-                <a class="nav-link">Welcome! '. $_SESSION['username'] .'</a>
+                <a href="Shopkeeper.php?shopids='. $_SESSION['shopid'] .'" class="btn btn-outline-secondary" style="margin-top: 2px; margin-left: 8px;">Profile: '. $_SESSION['ownername'] .'</a>
               </li>';
               }
               echo '</ul>
             <form class="d-flex" action="Search.php" method="GET">
               <input class="form-control me-2" type="search" name="search"
-                placeholder="Enter Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
+                placeholder="Enter Search" aria-label="Search" disabled>
+              <button class="btn btn-outline-success" type="submit" disabled>Search</button>
             </form>
           </div>
         </div>

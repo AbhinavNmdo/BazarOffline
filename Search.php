@@ -6,9 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Results</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
 
 </head>
 <style>
+  *
+  {
+      font-family: 'Baloo Chettan 2', cursive;
+      scroll-behavior: smooth;
+  }
+
   #container1 {
     margin-left: 100px;
     display: flex;
