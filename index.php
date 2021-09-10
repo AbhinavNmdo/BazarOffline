@@ -24,9 +24,43 @@
 #radius {
     border-radius: 15px;
 }
+#popupmain  
+{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(68, 68, 68, 0.5);
+    z-index: 1001;
+}
+
+#popup
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    height: auto;
+    width: 325px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+
+}
 </style>
 
 <body>
+    <div id="popupmain" style="display: none;">
+        <div id="popup">
+            <h2 align="center" id="heading">श्री गणेश चतुर्थी की अनंत शुभकामनाएं</h2>
+            <img src="Images/ganeshji.jpeg" alt="">
+            <button class="btn btn-primary sametoyou" style="margin-top: 20px;">जय हो</button>
+            <p align="center">Click this button to dismiss.</p>
+        </div>
+    </div>
     <?php
     require 'views/_dbconnect.php';
     require 'views/_navbar.php';
@@ -38,9 +72,7 @@
         </div>
     </div>
 
-    <div id="heading1">
-        <h2>Category</h2>
-    </div>
+    
 
     <!-- <div class="container my-4">
         <div class="alert alert-success" role="alert">
@@ -82,6 +114,16 @@
         ?>
     </div>
 </body>
+<script>
+    $(document).ready(function(){
+        setTimeout(function(){
+            $('#popupmain').css('display', 'block');
+        }, 2000);
+    });
+    $('.sametoyou').click(function(){
+        $('#popupmain').css('display', 'none');
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
 </script>
