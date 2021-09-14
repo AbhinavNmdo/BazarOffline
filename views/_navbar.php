@@ -30,7 +30,7 @@
       <div class="container-fluid">
         <img src="Images/logo.png" alt="" style="width: 70px; margin-right:
           10px;">
-        <a class="navbar-brand" href="index.html" style="font-size: 25px;">BazarOffline</a>
+        <a class="navbar-brand" href="index.php" style="font-size: 25px;">BazarOffline</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -46,7 +46,7 @@
               <a class="nav-link active" aria-current="page" href="About.php">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="Contact.php">Contact Us</a>
+              <a class="nav-link active" aria-current="page" href="Contact.php">Feedback</a>
             </li>';
             // <li class="nav-item dropdown">
             //   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"

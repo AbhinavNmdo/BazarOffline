@@ -26,10 +26,12 @@ require "views/_dbconnect.php";
             }
             else{
                 $exist = true;
+                // echo error_log($result);
             }
         }
         else{
             $exist = true;
+            // echo error_log($result);
         }
 
         

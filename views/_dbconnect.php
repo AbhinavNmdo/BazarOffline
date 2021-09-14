@@ -1,9 +1,9 @@
 <!-- INSERT INTO `agent` (`name`, `password`, `cpassword`) VALUES ('Abhinav', 'asdfasdf', 'asdfsdf'); -->
 <?php
-$servername = "sql6.freesqldatabase.com";
-$username = "sql6434961";
-$password= "lLD32M89PA";
-$database = "sql6434961";
+$servername = "localhost";
+$username = "root";
+$password= "";
+$database = "bazaroffline";
 
 // Connecting to Database
 $conn = mysqli_connect($servername, $username, $password, $database);

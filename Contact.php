@@ -34,7 +34,6 @@
         scroll-behavior: smooth;
     }
 </style>
-
 <body>
     <?php
         require "views/_navbar.php"
