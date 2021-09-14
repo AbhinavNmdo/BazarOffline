@@ -63,7 +63,6 @@
         </div>
     </div>
     <?php
-    require 'views/_dbconnect.php';
     require 'views/_navbar.php';
     ?>
     <div id="header">
