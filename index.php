@@ -51,9 +51,9 @@
 
 }
 </style>
-
-<body onload="loadingfunc()">   
-    <div id="loading"></div>
+<!-- onload="loadingfunc()" -->
+<body>
+    <!-- <div id="loading"></div> -->
     <div id="popupmain" style="display: none;">
         <div id="popup">
             <h2 align="center" id="heading">।। श्री गणेशाय नमः ।।</h2>
@@ -127,10 +127,10 @@
         $('#popupmain').css('display', 'none');
     });
 
-    var preloader = document.getElementById('loading');
-    function loadingfunc(){
-        preloader.style.display = 'none';
-    }
+    // var preloader = document.getElementById('loading');
+    // function loadingfunc(){
+    //     preloader.style.display = 'none';
+    // }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
