@@ -24,8 +24,8 @@
 #radius {
     border-radius: 15px;
 }
-#popupmain  
-{
+
+#popupmain {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -33,8 +33,7 @@
     z-index: 1001;
 }
 
-#popup
-{
+#popup {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,9 +50,9 @@
 
 }
 </style>
-<!-- onload="loadingfunc()" -->
-<body>
-    <!-- <div id="loading"></div> -->
+
+<body onload="loadingfunc()">
+    <div id="loading"></div>
     <div id="popupmain" style="display: none;">
         <div id="popup">
             <h2 align="center" id="heading">।। श्री गणेशाय नमः ।।</h2>
@@ -63,8 +62,8 @@
         </div>
     </div>
     <?php
-    require 'views/_dbconnect.php';
-    require 'views/_navbar.php';
+        require 'views/_dbconnect.php';
+        require 'views/_navbar.php';
     ?>
     <div id="header">
         <div id="header2">
@@ -76,14 +75,6 @@
     <div id="heading1">
         <h2>Category</h2>
     </div>
-
-    <!-- <div class="container my-4">
-        <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Welcome!</h4>
-            <p>If you want the people in your local area to avail your services or use your products then you must focus on offline marketing. It gives you a wonderful opportunity to establish a good relationship with the people. This will increase customer loyalty.</p>
-        </div>
-    </div> -->
-
 
     <!-- Cards -->
     <div class="container">
@@ -116,19 +107,20 @@
     </div>
 </body>
 <script>
-    $(document).ready(function(){
-        setTimeout(function(){
-            $('#popupmain').css('display', 'block');
-        }, 4000);
-    });
-    $('.sametoyou').click(function(){
-        $('#popupmain').css('display', 'none');
-    });
+$(document).ready(function() {
+    setTimeout(function() {
+        $('#popupmain').css('display', 'block');
+    }, 4000);
+});
+$('.sametoyou').click(function() {
+    $('#popupmain').css('display', 'none');
+});
 
-    // var preloader = document.getElementById('loading');
-    // function loadingfunc(){
-    //     preloader.style.display = 'none';
-    // }
+var preloader = document.getElementById('loading');
+
+function loadingfunc() {
+    preloader.style.display = 'none';
+}
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
