@@ -12,6 +12,7 @@ $id = $_GET['shopid'];
     <link rel="stylesheet" media="screen and (max-width: 1010px)" href="views/phone.css">
     <title>Items</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <style>
     *

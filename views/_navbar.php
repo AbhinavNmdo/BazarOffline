@@ -22,6 +22,7 @@
       crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
       href="semantic/dist/semantic.min.css">
+      <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <title>BazarOffline</title>
   </head>
