@@ -73,6 +73,12 @@
               </li>';
               }
 
+              if(isset($_SESSION['admin'])){
+                echo '<li class="nav-item">
+                <a class="btn btn-danger" href="Logout.php">Admin Logout</a>
+              </li>';
+              }
+
               if($loggin){
               echo '<li class="nav-item">
                 <a class="nav-link" href="Logout.php">Logout</a>

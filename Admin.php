@@ -283,9 +283,6 @@ require "views/_dbconnect.php";
             </div>    
         </div>
     </div>
-<div class="container m-4">
-    <a href="Logout.php" class="btn btn-danger m-4">Logout</a>
-</div>
 
 
 
