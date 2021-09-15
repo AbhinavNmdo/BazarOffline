@@ -8,15 +8,18 @@
     $failed = false;
 
     if (isset($_POST['item'])) {
-        $itemsql = "SELECT * FROM `shopkeeper` WHERE `shop_id` = $shopkeeperid";
-        $resultitem = mysqli_query($conn, $itemsql);
-        while ($row = mysqli_fetch_assoc($resultitem)) {
-            $shopzip = $row['shop_zip'];
+        $collection = $db->items;
+            $shopzip = $_SESSION['shopzip'];
             $itemname = $_POST['itemname'];
             $itemdesc = $_POST['itemdesc'];
             if(!empty($itemname) or !empty($itemdesc)){
-                    $sql = "INSERT INTO `items`(`item_name`, `item_desc`, `itemshop_id`, `item_zip`) VALUES ('$itemname','$itemdesc','$shopkeeperid','$shopzip')";
-                $result = mysqli_query($conn, $sql);
+                $document = array(
+                    "name" => "$itemname",
+                    "description" => "$itemdesc",
+                    "shop_id" => "$shopkeeperid",
+                    "shop_zip" => "$shopzip"
+                );
+                $result = $collection->insertOne($document);
                 if ($result) {
                     $success = true;
                     header("location: Shopkeeper.php?shopids=$shopkeeperid");
@@ -28,37 +31,36 @@
                 $failed = true;
             }
         }
-    }
+    
+    // Need to update it    
     if (isset($_POST['profile'])){
-        $target = basename($_FILES['profile']['name']);
-        $img_tmp = $_FILES['profile']['tmp_name'];
-        $img = $_FILES['profile']['name'];
-
-        $fileext = explode('.', $img);
-        $filecheck = strtolower(end($fileext));
-        $filestored = array('jpg', 'png', 'jpeg');
-
-        if(in_array($filecheck, $filestored)){
-            $profilesql = "UPDATE `shopkeeper` SET `shop_image`='$img' WHERE `shop_id` = '$shopkeeperid'";
-            $resultprofile = mysqli_query($conn, $profilesql);
-            if (move_uploaded_file($img_tmp, $target)){
-                $success = true;
-                header("location: Shopkeeper.php?shopids=$shopkeeperid");
-            }
-            else{
-                $failed = true;
-            }
-        }
-        else{
-            $failed = true;
-        }
+            $fileName = $_FILES['profile']['name'];
+            $fileType = $_FILES['profile']['type'];
+            $fileContent = file_get_contents($_FILES['profile']['tmp_name']);
+            $dataUrl = 'data:' . $fileType . ';base64,' . base64_encode($fileContent);
+            
+            $item = array(
+                'name' => $fileName,
+                'type' => $fileType,
+                'data' => $dataUrl
+            );
+            
+            $collection = $db->shopkeeper;
+            $update = $collection->updateOne(
+                ['_id' => new MongoDB\BSON\ObjectID($shopkeeperid)],
+                ['$set' => ['Image' => $item]]
+            );
+        
     }
     if (isset($_POST['chtiming'])){
         $timing = $_POST['timing'];
         if(!empty($timing)){
-            $timingsql = "UPDATE `shopkeeper` SET `shop_timing`='$timing' WHERE `shop_id` = '$shopkeeperid'";
-            $resulttiming = mysqli_query($conn, $timingsql);
-            if ($resulttiming) {
+            $collection = $db->shopkeeper;
+            $update = $collection->updateOne(
+                ['_id' => new MongoDB\BSON\ObjectID($shopkeeperid)],
+                ['$set' => ['Timing' => $timing]]
+            );
+            if ($update) {
                 $success = true;
                 header("location: Shopkeeper.php?shopids=$shopkeeperid");
             } else {
@@ -72,9 +74,12 @@
     if(isset($_POST['mapsubmit'])){
         $maplink = $_POST['maps'];
         if(!empty($maplink)){
-            $sqlmap = "UPDATE `shopkeeper` SET `shop_maps`='$maplink' WHERE `shop_id` = $shopkeeperid";
-            $resultmap = mysqli_query($conn, $sqlmap);
-            if ($resultmap) {
+            $collection = $db->shopkeeper;
+            $update = $collection->updateOne(
+                ['_id' => new MongoDB\BSON\ObjectID($shopkeeperid)],
+                ['$set' => ['Map' => $maplink]]
+            );
+            if ($update) {
                 $success = true;
                 header("location: Shopkeeper.php?shopids=$shopkeeperid");
             } else {
@@ -124,17 +129,13 @@
 
     <!-- Security for Shopkeepers -->
     <?php
-    $sqlforcheck = "SELECT * FROM `shopkeeper` WHERE `shop_id` = $shopkeeperid";
-    $resultforcheck = mysqli_query($conn, $sqlforcheck);
-    while ($row = mysqli_fetch_assoc($resultforcheck)) {
-        $username156 = $row['shop_username'];
-        if ($_SESSION['username'] != $username156) {
+    $collection = $db->shopkeeper;
+    $user = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($shopkeeperid)]);
+        $active = $user['Username'];
+        if ($_SESSION['username'] != $active) {
             header("location: Logout.php");
             header("location: Login.php");
         }
-    }
-
-
     ?>
 
 

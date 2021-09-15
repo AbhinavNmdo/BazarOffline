@@ -1,5 +1,6 @@
 <?php
 session_start();
+$id = $_GET['shopid'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,30 +43,21 @@ session_start();
 
     <!-- Shopkeeper Profile -->
     <?php
-    $id = $_GET['shopid'];
-    $sql = "SELECT * FROM `shopkeeper` WHERE `shop_id` = $id";
-    $result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-        $shopname = $row['shop_name'];
-        $shopaddress = $row['shop_address'];
-        $shopzip = $row['shop_zip'];
-        $profile = $row['shop_image'];
-        $ownerprofile = $row['owner_image'];
-        $shoptiming = $row['shop_timing'];
-        $maps = $row['shop_maps'];
-        echo '<div class="container responsive">
+    $collection = $db->shopkeeper;
+    $shops = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
+    
+    echo '<div class="container responsive">
             <div class="col-lg-4 m-4 responsive">
-            <!-- <svg class="bd-placeholder-img rounded-circle responsive" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg> -->
-            <img id="profileimage" class="bd-placeholder-img rounded-circle responsive" src="'.$profile.'" alt="" width="200px" height="200px">
-            <h2 style="margin-top: 15px;">' . $shopname . '</h2>
-            <p style="text-align: center;">' . $shopaddress . '</p>
-            <p class="card-text">Shop Timing : '. $shoptiming . '</p>
-            <a href="'. $maps .'" class="btn btn-info" target="_blank">Show in Maps</a>
+            <img id="profileimage" class="bd-placeholder-img rounded-circle responsive" src="shop.jpg" alt="" width="200px" height="200px">
+            <h2 style="margin-top: 15px;">' . $shops['ShopName'] . '</h2>
+            <p style="text-align: center;">' . $shops['Address'] . '</p>
+            <p class="card-text">Shop Timing : '. $shops['Timing'] . '</p>
+            <a href="'. $shops['Map'] .'" class="btn btn-info" target="_blank">Show in Maps</a>
           </div>
             </div>
             <hr>
             <h2 align="center" style="margin: 40px;">Products Available</h2> ';
-    }
+    
     ?>
 
 
@@ -73,20 +65,16 @@ session_start();
     <div class="container my-4">
         <div class="row">
             <?php
-            $id = $_GET['shopid'];
-            $sql = "SELECT * FROM `items` WHERE `itemshop_id`=$id";
-            $result = mysqli_query($conn, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-                $itemid = $row['item_id'];
-                $itemname = $row['item_name'];
-                $itemdesc = $row['item_desc'];
+            $collection = $db->items;
+            $items = $collection->find(['shop_id' => $id]);
+            foreach($items as $item){
                 echo '<div class="col-md-4">
                         <div class="row-md-4 m-4">
                         <div class="card" style="height: 300px; border-radius: 15px;">
-                            <img src="https://source.unsplash.com/1600x900/?' . $itemname . '" class="card-img-top" alt="..." style="border-radius: 15px;">
+                            <img src="https://source.unsplash.com/1600x900/?' . $item['name'] . '" class="card-img-top" alt="..." style="border-radius: 15px;">
                             <div class="card-body">
-                                <h5 class="card-title">' . $itemname . '</h5>
-                                <p class="card-text">' . substr($itemdesc, 0, 190) . '</p>
+                                <h5 class="card-title">' . $item['name'] . '</h5>
+                                <p class="card-text">' . $item['description'] . '</p>
                             </div>
                         </div>
                     </div>

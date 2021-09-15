@@ -1,16 +1,9 @@
-<!-- INSERT INTO `agent` (`name`, `password`, `cpassword`) VALUES ('Abhinav', 'asdfasdf', 'asdfsdf'); -->
 <?php
-$servername = "sql6.freesqldatabase.com";
-$username = "sql6434961";
-$password= "lLD32M89PA";
-$database = "sql6434961";
+require "vendor/autoload.php";
 
-// Connecting to Database
-$conn = mysqli_connect($servername, $username, $password, $database);
+// Connect to MongoDB
+$m = new MongoDB\Client('mongodb+srv://abhinav:abhinav1234@bazaroffline.0hj24.mongodb.net/test');
 
-// Die statnment if not connected
-if (!$conn) {
-  die("Sorry, Cant connect" . mysqli_connect_error());
-}
-
+// Select Database
+$db = $m->bazaroffline;
 ?>

@@ -5,8 +5,12 @@
         $feedemail = $_POST['email1'];
         $feedmsg = $_POST['message'];
         if(!empty($feedemail) or !empty($feedmsg)){
-            $sql = "INSERT INTO `contact` (`email`, `msg`) VALUES ('$feedemail', '$feedmsg')";
-            $result = mysqli_query($conn, $sql);
+            $collection = $db->contact;
+            $document = array(
+                'E-mail' => $feedemail,
+                'Message' => $feedmsg
+            );
+            $contact = $collection->insertOne($document);
             header("location: index.php");
         }
     }

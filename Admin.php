@@ -1,4 +1,11 @@
 <?php
+ob_start();
+session_start();
+if(!isset($_SESSION['admin'])){
+    header("location: Login.php");
+}
+use MongoDB\Operation\FindOne;
+
 $exist = false;
 $done = false;
 require "views/_dbconnect.php";
@@ -14,19 +21,32 @@ require "views/_dbconnect.php";
         $zip = $_POST['zip'];
         $shoptiming = $_POST['timing'];
         $maplink = $_POST['map'];
+        $mobileno = $_POST['mobile'];
         
-        if(!empty($username11)){
-            $sql1 = "SELECT * FROM `shopkeeper` WHERE `shop_username` = '$username11'";
-            $result1 = mysqli_query($conn, $sql1);
-            $num = mysqli_num_rows($result1);
-            if ($num==0){
-                $sql = "INSERT INTO `shopkeeper`(`catshop_id`, `shop_name`, `shop_owner`, `shop_username`, `shop_email`, `shop_address`, `shop_password`, `shop_cpassword`, `shop_zip`, `shop_timing`, `shop_maps`) VALUES ('$category','$shopname','$ownername','$username11','$shopemail','$shopaddress','$pass','$cpass','$zip', '$shoptiming', '$maplink')";
-                $result = mysqli_query($conn, $sql);
+        if(!empty($username11) and !empty($shopemail) and !empty($pass)){
+            $collection = $db->shopkeeper;
+            $document = array(
+                "ShopName" => "$shopname",
+                "OwnerName" => "$ownername",
+                "Address" => "$shopaddress",
+                "E-mail" => "$shopemail",
+                "Username" => "$username11",
+                "Password" => "$pass",
+                "C-Password" => "$cpass",
+                "category" => "$category",
+                "Zip" => "$zip",
+                "Timing" => "$shoptiming",
+                "Map" => "$maplink",
+                "Mobile" => "$mobileno",
+                "Image" => "",
+                "AgentCode" => ""
+            );
+            $result = $collection->insertOne($document);
+            if ($result){
                 $done = true;
             }
             else{
                 $exist = true;
-                // echo error_log($result);
             }
         }
         else{
@@ -41,8 +61,19 @@ require "views/_dbconnect.php";
         $catname = $_POST['catname'];
         $catdesc = $_POST['catdesc'];
         if(!empty($catname) or !empty($catdesc)){
-            $sql = "INSERT INTO `categories`(`cat_name`, `cat_desc`) VALUES ('$catname','$catdesc')";
-            $result = mysqli_query($conn, $sql);
+            $collection = $db->categories;
+            $document = array(
+                "cat_name" => "$catname", 
+                "cat_desc" => "$catdesc"
+            );
+            $result = $collection->insertOne($document);
+            if ($result){
+                $done = true;
+            }
+            else{
+                $exist = true;
+            }
+            
         }
         else{
             $exist = true;
@@ -59,8 +90,23 @@ require "views/_dbconnect.php";
         $agentcpass = $_POST['agent_cpassword'];
 
         if(!empty($agentusername)){
-            $agentsql = "INSERT INTO `agent`(`agent_name`, `agent_username`, `agent_email`, `agent_address`, `agent_mobile`, `agent_password`, `agent_cpassword`) VALUES ('$agentname','$agentusername','$agentemail','$agentaddress','$agentmobile','$agentpass','$agentcpass')";
-            $resultagent = mysqli_query($conn, $agentsql);
+            $collection = $db->agent;
+            $document = array(
+                "Name" => "$agentname",
+                "Username" => "$agentusername",
+                "E-mail" => "$agentemail",
+                "Address" => "$agentaddress",
+                "Mobile" => "$agentmobile",
+                "Password" => "$agentpass",
+                "C-Password" => "$agentcpass"
+            );
+            $result = $collection->insertOne($document);
+            if ($result){
+                $done = true;
+            }
+            else{
+                $exist = true;
+            }
         }
         else{
             $exist = true;
@@ -167,6 +213,10 @@ require "views/_dbconnect.php";
                             <input type="password" class="form-control" id="cpassword" name="cpassword">
                         </div>
                         <div class="mb-3">
+                            <label for="mobile" class="form-label">Mobile</label>
+                            <input type="text" class="form-control" id="mobile" name="mobile">
+                        </div>
+                        <div class="mb-3">
                             <label for="zip" class="form-label">Shop Zip</label>
                             <input type="text" class="form-control" id="zip" name="zip">
                         </div>
@@ -182,14 +232,12 @@ require "views/_dbconnect.php";
                             <label for="select" class="form-label">Select Category</label>
                             <select name="select" id="select" class="form-control">
                                 <?php
-                                        $sql = "SELECT * FROM `categories`";
-                                        $result = mysqli_query($conn, $sql);
-                                        while ($row = mysqli_fetch_assoc($result)){
-                                        $id = $row['cat_id'];
-                                        $categories = $row['cat_name'];
-                                        echo '<option value="'.$id.'">'.$categories.'</option>';
+                                        $collection = $db->categories;
+                                        $category = $collection->find();
+                                        foreach($category as $cat){
+                                            echo '<option value="'.$cat['_id'].'">'.$cat['cat_name'].'</option>';
                                         }
-                                    ?>
+                                ?>
                             </select>
                         </div>
                         <button type="submit" name="shopsubmit" class="btn btn-primary">Submit</button>
@@ -234,7 +282,9 @@ require "views/_dbconnect.php";
             </div>    
         </div>
     </div>
-
+<div class="container m-4">
+    <a href="Logout.php" class="btn btn-danger m-4">Logout</a>
+</div>
 
 
 
@@ -245,6 +295,8 @@ function getvalue() {
     var cvalue = document.getElementsByName("select").value;
     console.log("cvalue");
 }
+
+
 </script>
 
 </html>

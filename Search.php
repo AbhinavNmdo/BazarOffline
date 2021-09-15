@@ -43,14 +43,14 @@
     <div class="row">
       <?php
       $search = $_GET['search'];
-      $sql32 = "SELECT * FROM `shopkeeper` WHERE MATCH (`shop_name`, `shop_zip`, `shop_address`, `shop_owner`) against ('$search')";
-      $result32 = mysqli_query($conn, $sql32);
+      $collection = $db->shopkeeper;
+      $searching = $collection->find(['ShopName' => $search], ['Zip' => $search], ['Address' => $search], ['OwnerName' => $search]);
       echo '<h2 id="heading1122">You Searched for "' . $search . '"</h2>';
-      while ($row = mysqli_fetch_assoc($result32)) {
-        $shoppin = $row['shop_zip'];
-        $shopname = $row['shop_name'];
-        $shopid = $row['shop_id'];
-        $shopaddress = $row['shop_address'];
+      foreach($searching as $ser) {
+        $shoppin = $ser['Zip'];
+        $shopname = $ser['ShopName'];
+        $shopid = $ser['_id'];
+        $shopaddress = $ser['Address'];
         echo '<div class="col-md-4">
         <div class="row-md-4 m-4">
         <div class="card" style="border-radius: 15px; height: 370px;">
@@ -61,8 +61,8 @@
                 <a href="Item.php?shopid=' . $shopid . '" class="btn btn-primary">View Products</a>
             </div>
         </div>
-    </div>
-    </div>';
+        </div>
+        </div>';
       }
       ?>
     </div>

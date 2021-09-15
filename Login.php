@@ -2,38 +2,41 @@
     $login = false;
     $err = false;
     $emailnotexist = false;
+    $adminlogin = false;
     require "views/_dbconnect.php";
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $sql = "SELECT * FROM `shopkeeper` WHERE `shop_username` = '$username'";
-        $result = mysqli_query($conn, $sql);
-        $num = mysqli_num_rows($result);
-        if($num == 1){
-            while ($row = mysqli_fetch_assoc($result)) {
-                if ($password == $row['shop_password']) {
-                    $login = true;
+        $collection = $db->shopkeeper;
+        $check = $collection->findOne(['Username' => $username]);
+        if($check['Password'] == $password){
+            $login = true;
+            session_start();
+            $shopid = $check['_id'];
+            $ownername = $check['OwnerName'];
+            $_SESSION['ownername'] = $check['OwnerName'];
+            $_SESSION['shopzip'] = $check['Zip'];
+            $_SESSION['shopid'] = $shopid;
+            $_SESSION['username'] = $check['Username'];
+            $_SESSION['loggedin'] = true;
+            header("location: Shopkeeper.php?shopids=$shopid");
+        }
+        elseif($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            if($username == "admin1122"){
+                if($password == "admin1122"){
                     session_start();
-                    $shopid = $row['shop_id'];
-                    $ownername = $row['shop_owner'];
-                    $_SESSION['ownername'] = $ownername;
-                    $shopzip = $row['shop_zip'];
-                    $_SESSION['shopid'] = $shopid;
-                    $_SESSION['username'] = $username;
-                    $_SESSION['loggedin'] = true;
-                    header("location: Shopkeeper.php?shopids=$shopid");
-                }
-                else{
-                    $err = true;
+                    $adminlogin = true;
+                    $_SESSION['admin'] = true;
+                    header("location: Admin.php");
                 }
             }
         }
-        else {
-            $emailnotexist = true;
+        else{
+            $err = true;
         }
-        
     }
-
 ?>
 
 
@@ -88,12 +91,15 @@
     <div class="container my-4" id="div">
         <form action="Login.php" method="post">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Username</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="username" aria-describedby="email">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" aria-describedby="email">
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" name="password" id="password">
+                <span>
+                    <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+                </span>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>

@@ -1,12 +1,14 @@
 <?php
     $itemid = $_GET['itemid'];
     include "views/_dbconnect.php";
-    $sql = "SELECT * FROM `items` WHERE `item_id` = $itemid";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $shopid = $row['itemshop_id'];
-    $deletesql = "DELETE FROM `items` WHERE `item_id` = '$itemid'";
-    $resultdelete = mysqli_query($conn, $deletesql);
+    $collection = $db->items;
+    $shop = $collection->findOne(
+        ['_id' => new MongoDB\BSON\ObjectID($itemid)]
+    );
+    $shopid = $shop['shop_id'];
+    $delete = $collection->deleteOne(
+        ['_id' => new MongoDB\BSON\ObjectID($itemid)]
+    );
     
     header("location: Shopkeeper.php?shopids=$shopid");
 
