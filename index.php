@@ -87,7 +87,7 @@
                         $desc = $cat['cat_desc'];
                         echo '<div class="col-md-4">
                         <div class="row-md-4 m-4">
-                        <div class="card" style="height: 370px; border-radius: 15px;">
+                        <div class="card" style="height: auto; border-radius: 15px;">
                             <img src="https://source.unsplash.com/1600x900/?'. $cat['cat_name'] .'" class="card-img-top" alt="Oops" style="border-radius: 15px;">
                             <div class="card-body">
                                 <h5 class="card-title">'. $cat['cat_name'] . '</h5>

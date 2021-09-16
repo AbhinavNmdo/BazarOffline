@@ -1,7 +1,7 @@
 #header
 {
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
 }
 
@@ -21,9 +21,10 @@
 #header::before
 {
     content: "";
-    height: 500px;
+    height: 10px;
+    background-image: none;
+    background-color: white;
     width: 100%;
-    background-image: url(../Images/bg6.png);
     top: 0%;
     left: 0%;
     
