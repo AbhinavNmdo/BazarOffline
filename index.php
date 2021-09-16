@@ -13,7 +13,7 @@
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>Welcome</title>
     <link rel="stylesheet" href="views/_Welcomestyle.css">
-    <link rel="stylesheet" media="screen and (max-width: 1100px)" href="views/_phone.css">
+    <link rel="stylesheet" media="screen and (max-width: 1100px)" href="views/_phonestyle.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -74,7 +74,7 @@
     </div>
 
     <div id="heading1">
-        <h2>Category</h2>
+        <h2>Categories</h2>
     </div>
 
     <!-- Cards -->
@@ -106,6 +106,37 @@
             require "views/_footer.php"
         ?>
     </div>
+
+<!--Login Modal -->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true" style="border-radius: 15px;">
+  <div class="modal-dialog" style="border-radius: 15px;">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="Login.php" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" aria-describedby="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" id="password">
+                <span>
+                    <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+                </span>
+            </div>
+            <button type="submit" name="login" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"></button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 <script>
 $(document).ready(function() {

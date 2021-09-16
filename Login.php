@@ -4,7 +4,7 @@
     $emailnotexist = false;
     $adminlogin = false;
     require "views/_dbconnect.php";
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if (isset($_POST['login'])){
         $username = $_POST['username'];
         $password = $_POST['password'];
         $collection = $db->shopkeeper;
@@ -21,7 +21,7 @@
             $_SESSION['loggedin'] = true;
             header("location: Shopkeeper.php?shopids=$shopid");
         }
-        elseif($_SERVER['REQUEST_METHOD'] == 'POST'){
+        elseif(isset($_POST['login'])){
             $username = $_POST['username'];
             $password = $_POST['password'];
             if($username == "admin1122"){
@@ -102,7 +102,7 @@
                     <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
                 </span>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" name="login" class="btn btn-primary">Login</button>
         </form>
     </div>
 </body>

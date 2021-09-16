@@ -5,7 +5,7 @@
   else{
   $loggin= false;
   }
-  require"_dbconnect.php" ;
+  require "_dbconnect.php";
 
   echo '<!doctype html>
 <html lang="en">
@@ -41,7 +41,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+              <a class="nav-link active" onclick="logout()" aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="About.php">About</a>
@@ -49,43 +49,26 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="Contact.php">Feedback</a>
             </li>';
-            // <li class="nav-item dropdown">
-            //   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-            //     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            //     Categories
-            //   </a>
-              // Category Dropdown Section
-              // <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              //   $sqllli = "SELECT * FROM `categories`";
-              //   $resultlli = mysqli_query($conn, $sqllli);
-              //   while ($row = mysqli_fetch_assoc($resultlli)){
-              //   $id = $row['cat_id'];
-              //   $categories = $row['cat_name'];
-              //   echo '<li><a class="dropdown-item" href="Categories.php?catid='
-              //       . $id . '">'. $categories .'</a></li>';
-              //   }
-
-              //   echo '</ul>';
 
               if (!$loggin) {
               echo '<li class="nav-item">
-                <a class="nav-link" href="Login.php">Shop Login</a>
-              </li>';
+                <a class="nav-link active" aria-current="page" href="Login.php">Shop Login</a>
+                </li>';
               }
 
               if(isset($_SESSION['admin'])){
                 echo '<li class="nav-item">
-                <a class="btn btn-danger" href="Logout.php">Admin Logout</a>
+                <a class="btn btn-danger" aria-current="page" href="Logout.php">Admin Logout</a>
               </li>';
               }
 
               if($loggin){
               echo '<li class="nav-item">
-                <a class="nav-link" href="Logout.php">Logout</a>
+                <a class="btn btn-danger" aria-current="page" href="Logout.php">Logout</a>
               </li>';
               
               echo '<li class="nav-item">
-                <a href="Shopkeeper.php?shopids='. $_SESSION['shopid'] .'" class="btn btn-outline-secondary" style="margin-top: 2px; margin-left: 8px;">Profile: '. $_SESSION['ownername'] .'</a>
+                <a aria-current="page" href="Shopkeeper.php?shopids='. $_SESSION['shopid'] .'" class="btn btn-outline-secondary" style="margin-top: 2px; margin-left: 8px;">Profile: '. $_SESSION['ownername'] .'</a>
               </li>';
               }
               echo '</ul>
@@ -107,6 +90,4 @@
       <script src="semantic/dist/semantic.min.js"></script>
     </body>
   </html>';
-
-
   ?>

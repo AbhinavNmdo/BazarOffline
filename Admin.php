@@ -9,6 +9,7 @@ use MongoDB\Operation\FindOne;
 $exist = false;
 $done = false;
 require "views/_dbconnect.php";
+    // Shopkeeper
     if (isset($_POST['shopsubmit'])){
         $shopname = $_POST['nameofshop'];
         $ownername = $_POST['nameofowner'];
@@ -57,6 +58,7 @@ require "views/_dbconnect.php";
         
     }
 
+    // Category
     if (isset($_POST['catsubmit'])){
         $catname = $_POST['catname'];
         $catdesc = $_POST['catdesc'];
@@ -80,6 +82,7 @@ require "views/_dbconnect.php";
         }
     }
 
+    // Agent
     if(isset($_POST['agentsubmit'])){
         $agentname = $_POST['agent_name'];
         $agentusername = $_POST['agent_username'];
@@ -113,6 +116,20 @@ require "views/_dbconnect.php";
         }
     }
 
+    // Delete Category
+    if(isset($_POST['deletecat'])){
+        $collection = $db->categories;
+        $catid = $_POST['delete'];
+        $category = $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectID($catid)]);
+    }
+
+    // Delete Shopkeeer
+    if(isset($_POST['deleteshop'])){
+        $collection = $db->shopkeeper;
+        $shopid = $_POST['deleteshopkeeper'];
+        $shop = $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectID($shopid)]);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -134,6 +151,13 @@ require "views/_dbconnect.php";
     {
         font-family: 'Baloo Chettan 2', cursive;
         scroll-behavior: smooth;
+    }
+    .rowbutton
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 
 </style>
@@ -161,12 +185,22 @@ require "views/_dbconnect.php";
 
 
 
-    <div class="container" id="form">
-        <div class="row">
-            <!-- Category Add -->
-            <div class="col-md-4">
-                <div class="card rounded-3 m-4">
-                    <h2 style="margin: 20px;" align="center">Category Addition</h2>
+<div class="container rowbutton my-4">
+<!-- For Category Addition -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+  Add Category
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel1">Category Addition</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
                     <form class="m-4" action="Admin.php" method="POST">
                         <div class="mb-3">
                             <label for="catname" class="form-label">Category Name</label>
@@ -176,14 +210,85 @@ require "views/_dbconnect.php";
                             <label for="catdesc" class="form-label">Category Description</label>
                             <input type="text" class="form-control" id="catdesc" name="catdesc">
                         </div>
-                        <button type="submit" name="catsubmit" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="catsubmit" class="btn btn-primary">Add</button>
                     </form>
-                </div>
-            </div>
-            <!-- Shopkeeper Registration -->
-            <div class="col-md-4">
-                <div class="card rounded-3 m-4">
-                    <h2 style="margin: 20px;" align="center" class="m-4">Shopkeeper Registration</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- For Agent Addition -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Add Agent
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Agent Registration</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                    <form class="m-4" action="<?php $_SERVER['REQUEST_URI'] ?>" method="POST">
+                        <div class="mb-3">
+                            <label for="agent_name" class="form-label">Agent Name</label>
+                            <input type="text" class="form-control" id="agent_name" name="agent_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="agent_username" name="agent_username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="agent_email" name="agent_email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="agent_address" name="agent_address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_mobile" class="form-label">Mobile</label>
+                            <input type="text" class="form-control" id="agent_mobile" name="agent_mobile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="agent_password" name="agent_password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agent_cpassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="agent_cpassword" name="agent_cpassword">
+                        </div>
+                        <button class="btn btn-primary" type="submit" name="agentsubmit">Add</button>
+                    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- For Adding Shopkeeper -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+  Add Shopkeeper
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel2">Shopkeeper Registration</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
                     <form class="m-4" action="<?php $_SERVER['REQUEST_URI'] ?>" method="POST">
                         <div class="mb-3">
                             <label for="nameofowner" class="form-label">Name Of Owner</label>
@@ -241,49 +346,89 @@ require "views/_dbconnect.php";
                                 ?>
                             </select>
                         </div>
-                        <button type="submit" name="shopsubmit" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="shopsubmit" class="btn btn-primary">Add</button>
                     </form>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card rounded-3 m-4">
-                    <h2 style="margin: 20px;" align="center" class="m-4">Agent Registration</h2>
-                    <form class="m-4" action="<?php $_SERVER['REQUEST_URI'] ?>" method="POST">
-                        <div class="mb-3">
-                            <label for="agent_name" class="form-label">Agent Name</label>
-                            <input type="text" class="form-control" id="agent_name" name="agent_name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="agent_username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="agent_username" name="agent_username">
-                        </div>
-                        <div class="mb-3">
-                            <label for="agent_email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="agent_email" name="agent_email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="agent_address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="agent_address" name="agent_address">
-                        </div>
-                        <div class="mb-3">
-                            <label for="agent_mobile" class="form-label">Mobile</label>
-                            <input type="text" class="form-control" id="agent_mobile" name="agent_mobile">
-                        </div>
-                        <div class="mb-3">
-                            <label for="agent_password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="agent_password" name="agent_password">
-                        </div>
-                        <div class="mb-3">
-                            <label for="agent_cpassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="agent_cpassword" name="agent_cpassword">
-                        </div>
-                        <button class="btn btn-primary" type="submit" name="agentsubmit">Submit</button>
-                    </form>
-                </div>    
-            </div>    
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
+  </div>
+</div>
 
+<!-- For Deleting Category -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">
+  Delete Category
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel4" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel4">Delete Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="m-4" action="Admin.php" method="POST">
+        <label for="delete" class="form-label">Select Category</label>
+        <select name="delete" id="delete" class="form-control">
+            <?php
+                $collection = $db->categories;
+                $category = $collection->find();
+                foreach($category as $cat){
+                    echo '<option value="'.$cat['_id'].'">'.$cat['cat_name'].'</option>';
+                }
+            ?>
+        </select>
+        <button type="submit" name="deletecat" class="my-4 btn btn-primary">Delete</button>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- For Deleting Shopkeeper -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop5">
+  Delete Shopkeeper
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel5" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel5">Delete Shopkeeper</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="m-4" action="Admin.php" method="POST">
+        <label for="deleteshop" class="form-label">Select Shopkeeper</label>
+        <select name="deleteshopkeeper" id="deleteshopkeeper" class="form-control">
+            <?php
+                $collection = $db->shopkeeper;
+                $shopkeeper = $collection->find();
+                foreach($shopkeeper as $shop){
+                    echo '<option value="'.$shop['_id'].'">'.$shop['ShopName'].'</option>';
+                }
+            ?>
+        </select>
+        <button type="submit" name="deleteshop" class="my-4 btn btn-primary">Delete</button>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
 
 
 

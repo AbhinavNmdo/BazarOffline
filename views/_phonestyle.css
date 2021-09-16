@@ -1,0 +1,30 @@
+#header
+{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+#header p
+{
+    text-align: center;
+    font-size: 16px;
+}
+
+#header h2
+{
+    margin-top: 10px;
+    font-size: 35px;
+    text-align: center;
+}
+
+#header::before
+{
+    content: "";
+    height: 500px;
+    width: 100%;
+    background-image: url(../Images/bg6.png);
+    top: 0%;
+    left: 0%;
+    
+}
