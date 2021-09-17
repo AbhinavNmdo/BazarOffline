@@ -23,8 +23,8 @@
 #header::before
 {
     content: "";
-    background-image: url(../Images/bg8.png);
+    background-image: url(../Images/bg797.png);
     height: 100%;
     width: 100%;
-
+    top: 0%;
 }

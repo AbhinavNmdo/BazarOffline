@@ -68,7 +68,7 @@
     ?>
     <div id="header">
         <div id="header2">
-            <h2 class="bazar">Welcome to BazarOffline.</h2>
+            <h2 class="bazar">Welcome to BazarOffline</h2>
             <p class="bazar2">You can find shops and products near you.</p>
         </div>
     </div>
