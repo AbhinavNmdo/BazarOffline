@@ -43,7 +43,7 @@
             $collection = $db->categories;
             $category = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
             echo '<div id="heading">
-            <h2 style="margin: 20px;">Category: '. $category['cat_name'] .'</h2>
+            <h2 style="margin: 20px;">Category: '. $category['name'] .'</h2>
             </div>';
         ?>
     </div>
@@ -54,20 +54,34 @@
             <?php
                 $collection = $db->shopkeeper;
                 $shops = $collection->find(['category' => $id]);
-                foreach ($shops as $shop) {
-                    echo '<div class="col-md-4">
-                    <div class="row-md-4 m-4">
-                    <div class="card" style="height: auto; border-radius: 15px;">
-                        <img src="https://source.unsplash.com/1600x900/?'. $category['cat_name'] .'" class="card-img-top" alt="Oops" style="border-radius: 15px;">
-                        <div class="card-body">
-                            <h5 class="card-title">'. $shop['ShopName'] . '</h5>
-                            <p class="card-text">' . $shop['Address'] . '</p>
-                            <p class="card-text">Timing: ' . $shop['Timing'] . '</p>
-                            <a href="Item.php?shopid=' . $shop['_id'] . '" class="btn btn-primary">View Products</a>
+                $count = $collection->count($shops);
+                echo $count;
+                if ($count != 0){
+                    foreach ($shops as $shop) {
+                        $data = base64_encode($shop->Image->getData());
+                        echo '<div class="col-md-4">
+                        <div class="row-md-4 m-4">
+                        <div class="card" style="height: auto; border-radius: 15px;">
+                            <img src="data:jpeg;base64,'. $data .'" class="card-img-top" alt="Oops" style="border-radius: 15px;">
+                            <div class="card-body">
+                                <h5 class="card-title">'. $shop['ShopName'] . '</h5>
+                                <p class="card-text">' . $shop['Address'] . '</p>
+                                <p class="card-text">Timing: ' . $shop['Timing'] . '</p>
+                                <a href="Item.php?shopid=' . $shop['_id'] . '" class="btn btn-primary">View Products</a>
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                    </div>';
+                        </div>
+                        </div>';
+                        $count = 0;
+                    }
+                }
+                else{
+                    echo '<div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">Well done!</h4>
+                    <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                    <hr>
+                    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                  </div>';
                 }
             ?>
         </div>

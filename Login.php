@@ -7,34 +7,36 @@
     if (isset($_POST['login'])){
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $collection = $db->shopkeeper;
-        $check = $collection->findOne(['Username' => $username]);
-        if($check['Password'] == $password){
-            $login = true;
-            session_start();
-            $shopid = $check['_id'];
-            $ownername = $check['OwnerName'];
-            $_SESSION['ownername'] = $check['OwnerName'];
-            $_SESSION['shopzip'] = $check['Zip'];
-            $_SESSION['shopid'] = $shopid;
-            $_SESSION['username'] = $check['Username'];
-            $_SESSION['loggedin'] = true;
-            header("location: Shopkeeper.php?shopids=$shopid");
-        }
-        elseif(isset($_POST['login'])){
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            if($username == "admin1122"){
-                if($password == "admin1122"){
-                    session_start();
-                    $adminlogin = true;
-                    $_SESSION['admin'] = true;
-                    header("location: Admin.php");
-                }
+        if(!empty($username and !empty($password))){
+            $collection = $db->shopkeeper;
+            $check = $collection->findOne(['Username' => $username]);
+            if($check['Password'] == $password){
+                $login = true;
+                session_start();
+                $shopid = $check['_id'];
+                $ownername = $check['OwnerName'];
+                $_SESSION['ownername'] = $check['OwnerName'];
+                $_SESSION['shopzip'] = $check['Zip'];
+                $_SESSION['shopid'] = $shopid;
+                $_SESSION['username'] = $check['Username'];
+                $_SESSION['loggedin'] = true;
+                header("location: Shopkeeper.php?shopids=$shopid");
             }
-        }
-        else{
-            $err = true;
+            else if(isset($_POST['login'])){
+                    $username = $_POST['username'];
+                    $password = $_POST['password'];
+                    if($username == "admin1122"){
+                        if($password == "admin1122"){
+                            session_start();
+                            $adminlogin = true;
+                            $_SESSION['admin'] = true;
+                            header("location: Admin.php");
+                        }
+                    }
+            }
+            else{
+                $err = true;
+            }
         }
     }
 ?>

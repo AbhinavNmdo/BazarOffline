@@ -52,9 +52,10 @@ $id = $_GET['shopids'];
         <?php
         $collection = $db->shopkeeper;
         $profile = $collection->findOne(['_id' => $_SESSION['shopid']]);
+        $data = base64_encode($profile->Image->getData());
             echo '<div class="container responsive">
             <div class="col-lg-4 m-4 responsive">
-            <img class="bd-placeholder-img rounded-circle responsive" src="shop.jpg" alt="" width="200px" height="200px">
+            <img class="bd-placeholder-img rounded-circle responsive" src="data:jpeg;base64,'.$data.'" alt="" width="200px" height="200px">
             <h2 style="margin-top: 15px;">' . $profile['ShopName'] . '</h2>
             <p style="text-align: center;">' . $profile['Address'].', '. $profile['Zip'] . '</p>
             <p class="card-text">Shop Timing : '. $profile['Timing'] . '</p>
@@ -91,10 +92,11 @@ $id = $_GET['shopids'];
             $items = $collection->find(['shop_id' => $id]);
             foreach($items as $item){
                 $desc = $item['description'];
+                $data = base64_encode($item->image->getData());
                 echo '<div class="col-md-4">
                     <div class="row-md-4 m-4">
-                    <div class="card" style="height: 370px; border-radius: 15px;">
-                        <img src="https://source.unsplash.com/1600x900/?'. $item['name'] .'" class="card-img-top" alt="..." style="border-radius: 15px;">
+                    <div class="card" style="height: auto; border-radius: 15px;">
+                        <img src="data:jpeg;base64,'. $data .'" class="card-img-top" alt="..." style="border-radius: 15px;">
                         <div class="card-body">
                             <h5 class="card-title">' . $item['name'] . '</h5>
                             <p class="card-text">' . substr($desc, 0, 100) . '</p>

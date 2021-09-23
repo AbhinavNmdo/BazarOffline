@@ -51,17 +51,17 @@
 
 }
 </style>
-
-<body onload="loadingfunc()">
-    <div id="loading"></div>
-    <div id="popupmain" style="display: none;">
+<!-- onload="loadingfunc()" -->
+<body>
+    <!-- <div id="loading"></div> -->
+    <!-- <div id="popupmain" style="display: none;">
         <div id="popup">
             <h2 align="center" id="heading">।। श्री गणेशाय नमः ।।</h2>
             <img src="Images/ganeshji.jpeg" alt="">
             <button class="btn btn-primary sametoyou" style="margin-top: 20px;">जय हो</button>
             <p align="center">Click this button to dismiss.</p>
         </div>
-    </div>
+    </div> -->
     <?php
         require 'views/_dbconnect.php';
         require 'views/_navbar.php';
@@ -84,15 +84,16 @@
                     $collection = $db->categories;
                     $category = $collection->find();
                     foreach($category as $cat){
-                        $desc = $cat['cat_desc'];
+                        $data = base64_encode($cat->image->getData());
+                        $desc = $cat['description'];
                         echo '<div class="col-md-4">
                         <div class="row-md-4 m-4">
                         <div class="card" style="height: auto; border-radius: 15px;">
-                            <img class="card-img-top" src="https://source.unsplash.com/1600x900/?'. $cat['cat_name'] .'" alt="Oops" style="border-radius: 15px;">
+                            <img class="card-img-top" src="data:jpeg;base64,'. $data .'" alt="Oops" style="border-radius: 15px;" id="catImage">
                             <div class="card-body">
-                                <h5 class="card-title">'. $cat['cat_name'] . '</h5>
+                                <h5 class="card-title">'. $cat['name'] . '</h5>
                                 <p class="card-text">' . substr($desc, 0, 90) . '...</p>
-                                <a href="Categories.php?catid=' . $cat['_id'] . '" class="btn btn-primary">View ' . $cat['cat_name'] . '</a>
+                                <a href="Categories.php?catid=' . $cat['_id'] . '" class="btn btn-primary">View ' . $cat['name'] . '</a>
                             </div>
                         </div>
                     </div>
@@ -139,19 +140,24 @@
 </div>
 </body>
 <script>
-$(document).ready(function() {
-    setTimeout(function() {
-        $('#popupmain').css('display', 'block');
-    }, 4000);
-});
-$('.sametoyou').click(function() {
-    $('#popupmain').css('display', 'none');
-});
+// $(document).ready(function() {
+//     setTimeout(function() {
+//         $('#popupmain').css('display', 'block');
+//     }, 4000);
+// });
+// $('.sametoyou').click(function() {
+//     $('#popupmain').css('display', 'none');
+// });
 
-var preloader = document.getElementById('loading');
+// var preloader = document.getElementById('loading');
 
-function loadingfunc() {
-    preloader.style.display = 'none';
+// function loadingfunc() {
+//     preloader.style.display = 'none';
+// }
+
+function error() {
+    let image = document.getElementById('catImage');
+    image.setAttribute('src', "Images/catPlace.png");
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"

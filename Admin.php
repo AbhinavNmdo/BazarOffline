@@ -4,7 +4,6 @@ session_start();
 if(!isset($_SESSION['admin'])){
     header("location: Login.php");
 }
-use MongoDB\Operation\FindOne;
 
 $exist = false;
 $done = false;
@@ -26,6 +25,7 @@ require "views/_dbconnect.php";
         
         if(!empty($username11) and !empty($shopemail) and !empty($pass)){
             $collection = $db->shopkeeper;
+            $image = $_FILES['profile'];
             $document = array(
                 "ShopName" => "$shopname",
                 "OwnerName" => "$ownername",
@@ -39,7 +39,7 @@ require "views/_dbconnect.php";
                 "Timing" => "$shoptiming",
                 "Map" => "$maplink",
                 "Mobile" => "$mobileno",
-                "Image" => "",
+                "Image" => new MongoDB\BSON\Binary(file_get_contents($image["tmp_name"]), MongoDB\BSON\Binary::TYPE_GENERIC),
                 "AgentCode" => ""
             );
             $result = $collection->insertOne($document);
@@ -59,29 +59,29 @@ require "views/_dbconnect.php";
     }
 
     // Category
-    if (isset($_POST['catsubmit'])){
-        $catname = $_POST['catname'];
-        $catdesc = $_POST['catdesc'];
-        if(!empty($catname) or !empty($catdesc)){
-            $collection = $db->categories;
-            $document = array(
-                "cat_name" => "$catname", 
-                "cat_desc" => "$catdesc"
-            );
-            $result = $collection->insertOne($document);
-            if ($result){
-                $done = true;
-            }
-            else{
-                $exist = true;
-            }
-            
-        }
-        else{
-            $exist = true;
-        }
-    }
+    // if(isset($_POST['catsubmit'])){
+    //     $collection = $db->categories;
+    //     $catname = $_POST['catname'];
+    //     $catdesc = $_POST['catdesc'];
+    //     $image = $_FILES['catpic'];
+    //     if(!empty($catname)){
+    //       $document = array(
+    //         "name" => $_POST['catname'],
+    //         "description" => $_POST['catdesc'],
+    //         "image" => new MongoDB\BSON\Binary(file_get_contents($image['tmp_name']), MongoDB\BSON\Binary::TYPE_GENERIC)
+    //       );
 
+    //       $result = $collection->insertOne($document);
+    //       if($result){
+    //         $done = true;
+           
+    //       }
+    //       else{
+    //         $exist = true;
+    //       }
+    //     }
+      
+    // }
     // Agent
     if(isset($_POST['agentsubmit'])){
         $agentname = $_POST['agent_name'];
@@ -140,9 +140,6 @@ require "views/_dbconnect.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome! Admin</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -159,7 +156,55 @@ require "views/_dbconnect.php";
         align-items: center;
         flex-direction: column;
     }
+    .image_area {
+        position: relative;
+    }
 
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    .preview {
+        overflow: hidden;
+        width: 190px;
+        height: 190px;
+        margin: 10px;
+        border: 1px solid red;
+    }
+
+    .modal-lg {
+        max-width: 1000px !important;
+    }
+
+    .overlay {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        overflow: hidden;
+        height: 0;
+        transition: .5s ease;
+        width: 100%;
+    }
+
+    .image_area:hover .overlay {
+        height: 50%;
+        cursor: pointer;
+    }
+
+    .text {
+        color: #333;
+        font-size: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -183,35 +228,41 @@ require "views/_dbconnect.php";
 
     ?>
 
+    
+
 
 
 <div class="container rowbutton my-4">
 <!-- For Category Addition -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#addCat">
   Add Category
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="addCat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="0" aria-labelledby="addCatLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel1">Category Addition</h5>
+        <h5 class="modal-title" id="addCatLabel">Category</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-                    <form class="m-4" action="Admin.php" method="POST">
-                        <div class="mb-3">
-                            <label for="catname" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="catname" name="catname">
-                        </div>
-                        <div class="mb-3">
-                            <label for="catdesc" class="form-label">Category Description</label>
-                            <input type="text" class="form-control" id="catdesc" name="catdesc">
-                        </div>
-                        <button type="submit" name="catsubmit" class="btn btn-primary">Add</button>
-                    </form>
+      <form class="m-4" method="POST">
+          <div class="mb-3">
+              <label for="catname" class="form-label">Category Name</label>
+              <input type="text" class="form-control" id="catname" name="catname">
+          </div>
+          <div class="mb-3">
+              <label for="catdesc" class="form-label">Category Description</label>
+              <input type="text" class="form-control" id="catdesc" name="catdesc">
+          </div>
+          <div class="mb-3">
+              <label for="catpic" class="form-label">Choose Profile</label>
+              <input type="file" class="form-control" id="catpic" name="catpic">
+          </div>
+          <!-- <button type="submit" name="catsubmit" class="btn btn-primary">Add</button> -->
+      </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -220,18 +271,19 @@ require "views/_dbconnect.php";
   </div>
 </div>
 
+
 <!-- For Agent Addition -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#addAgent">
   Add Agent
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="addAgent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addAgentLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Agent Registration</h5>
+        <h5 class="modal-title" id="addAgentLabel">Agent Registration</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -276,20 +328,20 @@ require "views/_dbconnect.php";
 
 <!-- For Adding Shopkeeper -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#addShop">
   Add Shopkeeper
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+<div class="modal fade" id="addShop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addShopLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel2">Shopkeeper Registration</h5>
+        <h5 class="modal-title" id="addShopLabel">Shopkeeper Registration</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-                    <form class="m-4" action="<?php $_SERVER['REQUEST_URI'] ?>" method="POST">
+                    <form class="m-4" action="<?php $_SERVER['REQUEST_URI'] ?>" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="nameofowner" class="form-label">Name Of Owner</label>
                             <input type="text" class="form-control" id="nameofowner" name="nameofowner">
@@ -331,6 +383,10 @@ require "views/_dbconnect.php";
                             <input type="text" class="form-control" id="map" name="map">
                         </div>
                         <div class="mb-3">
+                            <label for="profile" class="form-label">Profile Pic</label>
+                            <input type="file" class="form-control" id="profile" name="profile">
+                        </div>
+                        <div class="mb-3">
                             <label for="timing" class="form-label">Timing</label>
                             <input type="text" class="form-control" id="timing" name="timing">
                         </div>
@@ -341,7 +397,7 @@ require "views/_dbconnect.php";
                                         $collection = $db->categories;
                                         $category = $collection->find();
                                         foreach($category as $cat){
-                                            echo '<option value="'.$cat['_id'].'">'.$cat['cat_name'].'</option>';
+                                            echo '<option value="'.$cat['_id'].'">'.$cat['name'].'</option>';
                                         }
                                 ?>
                             </select>
@@ -358,16 +414,16 @@ require "views/_dbconnect.php";
 
 <!-- For Deleting Category -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#delCat">
   Delete Category
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel4" aria-hidden="true">
+<div class="modal fade" id="delCat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delCatLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel4">Delete Category</h5>
+        <h5 class="modal-title" id="delCatLabel">Delete Category</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -378,7 +434,7 @@ require "views/_dbconnect.php";
                 $collection = $db->categories;
                 $category = $collection->find();
                 foreach($category as $cat){
-                    echo '<option value="'.$cat['_id'].'">'.$cat['cat_name'].'</option>';
+                    echo '<option value="'.$cat['_id'].'">'.$cat['name'].'</option>';
                 }
             ?>
         </select>
@@ -394,16 +450,16 @@ require "views/_dbconnect.php";
 
 <!-- For Deleting Shopkeeper -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop5">
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#delShop">
   Delete Shopkeeper
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel5" aria-hidden="true">
+<div class="modal fade" id="delShop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delShopLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel5">Delete Shopkeeper</h5>
+        <h5 class="modal-title" id="delShopLabel">Delete Shopkeeper</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -429,7 +485,35 @@ require "views/_dbconnect.php";
 </div>
 </div>
 </div>
-
+<!-- Category Cropper Modal -->
+<div class="modal fade" id="catModal" tabindex="100" role="dialog" aria-labelledby="modalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Crop Category Image</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="img-container">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <img src="" id="sample_catimage" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" id="catCrop" class="btn btn-primary">Upload</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 </body>
@@ -438,6 +522,71 @@ function getvalue() {
     var cvalue = document.getElementsByName("select").value;
     console.log("cvalue");
 }
+$(document).ready(function() {
+
+  var $modal = $('#catModal');
+
+  var image = document.getElementById('sample_catimage');
+
+  var cropper;
+
+  $('#catpic').change(function(event) {
+      var files = event.target.files;
+
+      var done = function(url) {
+          image.src = url;
+          $modal.modal('show');
+      };
+
+      if (files && files.length > 0) {
+          reader = new FileReader();
+          reader.onload = function(event) {
+              done(reader.result);
+          };
+          reader.readAsDataURL(files[0]);
+      }
+  });
+
+  $modal.on('shown.bs.modal', function() {
+      cropper = new Cropper(image, {
+          aspectRatio: 16 / 9,
+          viewMode: 3,
+          preview: '.preview'
+      });
+  }).on('hidden.bs.modal', function() {
+      cropper.destroy();
+      cropper = null;
+  });
+
+  $('#catCrop').click(function() {
+      canvas = cropper.getCroppedCanvas({
+          width: 300,
+          height: 300
+      });
+
+      canvas.toBlob(function(blob) {
+          url = URL.createObjectURL(blob);
+          var reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = function() {
+              var base64data = reader.result;
+              var name = $("#catname").val();
+              var desc = $("#catdesc").val();
+              var url = "Admin.php"
+              $.ajax({
+                  url: 'upload.php',
+                  method: 'POST',
+                  data: {catpic: base64data, catname: name, catdesc: desc},
+                  success: function(data) {
+                      $modal.modal('hide');
+                      $(location).attr('href',url);
+                  }
+              });
+          };
+      });
+  });
+
+});
 
 
 </script>
