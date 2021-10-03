@@ -23,39 +23,42 @@ require "views/_dbconnect.php";
         $maplink = $_POST['map'];
         $mobileno = $_POST['mobile'];
         
-        if(!empty($username11) and !empty($shopemail) and !empty($pass)){
-            $collection = $db->shopkeeper;
-            $image = $_FILES['profile'];
-            $document = array(
-                "ShopName" => "$shopname",
-                "OwnerName" => "$ownername",
-                "Address" => "$shopaddress",
-                "E-mail" => "$shopemail",
-                "Username" => "$username11",
-                "Password" => "$pass",
-                "C-Password" => "$cpass",
-                "category" => "$category",
-                "Zip" => "$zip",
-                "Timing" => "$shoptiming",
-                "Map" => "$maplink",
-                "Mobile" => "$mobileno",
-                "Image" => new MongoDB\BSON\Binary(file_get_contents($image["tmp_name"]), MongoDB\BSON\Binary::TYPE_GENERIC),
-                "AgentCode" => ""
-            );
-            $result = $collection->insertOne($document);
-            if ($result){
-                $done = true;
+        if($pass == $cpass){
+            if(!empty($username11) and !empty($shopemail) and !empty($pass) and !empty($shopname) and !empty($ownername) and !empty($shopaddress) and !empty($shopemail) and !empty($cpass) and !empty($zip) and !empty($shoptiming) and !empty($maplink) and !empty($mobileno) and $category === null){
+                $collection = $db->shopkeeper;
+                $image = $_FILES['profile'];
+                $document = array(
+                    "ShopName" => "$shopname",
+                    "OwnerName" => "$ownername",
+                    "Address" => "$shopaddress",
+                    "E-mail" => "$shopemail",
+                    "Username" => "$username11",
+                    "Password" => "$pass",
+                    "C-Password" => "$cpass",
+                    "category" => "$category",
+                    "Zip" => "$zip",
+                    "Timing" => "$shoptiming",
+                    "Map" => "$maplink",
+                    "Mobile" => "$mobileno",
+                    "Image" => new MongoDB\BSON\Binary(file_get_contents($image["tmp_name"]), MongoDB\BSON\Binary::TYPE_GENERIC),
+                    "AgentCode" => ""
+                );
+                $result = $collection->insertOne($document);
+                if ($result){
+                    $done = true;
+                }
+                else{
+                    $exist = true;
+                }
             }
-            else{
+            else {
+                echo "else";
                 $exist = true;
             }
         }
         else{
             $exist = true;
-            // echo error_log($result);
         }
-
-        
     }
 
     // Category
@@ -92,23 +95,25 @@ require "views/_dbconnect.php";
         $agentpass = $_POST['agent_password'];
         $agentcpass = $_POST['agent_cpassword'];
 
-        if(!empty($agentusername)){
-            $collection = $db->agent;
-            $document = array(
-                "Name" => "$agentname",
-                "Username" => "$agentusername",
-                "E-mail" => "$agentemail",
-                "Address" => "$agentaddress",
-                "Mobile" => "$agentmobile",
-                "Password" => "$agentpass",
-                "C-Password" => "$agentcpass"
-            );
-            $result = $collection->insertOne($document);
-            if ($result){
-                $done = true;
-            }
-            else{
-                $exist = true;
+        if(!empty($agentusername) and !empty($agentname) and !empty($agentemail) and !empty($agentaddress) and !empty($agentmobile) and !empty($agentpass) and !empty($agentcpass)){
+            if ($agentpass == $agentcpass) {
+                $collection = $db->agent;
+                $document = array(
+                    "Name" => "$agentname",
+                    "Username" => "$agentusername",
+                    "E-mail" => "$agentemail",
+                    "Address" => "$agentaddress",
+                    "Mobile" => "$agentmobile",
+                    "Password" => "$agentpass",
+                    "C-Password" => "$agentcpass"
+                );
+                $result = $collection->insertOne($document);
+                if ($result){
+                    $done = true;
+                }
+                else{
+                    $exist = true;
+                }
             }
         }
         else{
@@ -120,14 +125,57 @@ require "views/_dbconnect.php";
     if(isset($_POST['deletecat'])){
         $collection = $db->categories;
         $catid = $_POST['delete'];
-        $category = $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectID($catid)]);
+        if($catid === null){
+            $category = $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectID($catid)]);
+            if($category){
+                $done = true;
+            }
+            else {
+                $exist = true;
+            }
+        }
+        else{
+            $exist = true;
+        }
     }
 
     // Delete Shopkeeer
     if(isset($_POST['deleteshop'])){
         $collection = $db->shopkeeper;
         $shopid = $_POST['deleteshopkeeper'];
-        $shop = $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectID($shopid)]);
+        if($shopid === null){
+            $shop = $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectID($shopid)]);
+            if($shop){
+                $done = true;
+            }
+            else {
+                $exist = true;
+            }
+        }
+        else{
+            $exist = true;
+        }
+    }
+
+    if(isset($_POST['updateshopsub'])){
+        $collection = $db->shopkeeper;
+        $shopid = $_POST['updateshop'];
+        $shopcatid = $_POST['updateshopcat'];
+        if($shopid === null and $shopcatid === null){
+            $update = $collection->updateOne(
+                ['_id' => new MongoDB\BSON\ObjectID($shopid)],
+                ['$set' => ['category' => $shopcatid]]
+            );
+            if($update){
+                $done = true;
+            }
+            else {
+                $exist = true;
+            }
+        }
+        else{
+            $exist = true;
+        }
     }
 
 ?>
@@ -212,6 +260,7 @@ require "views/_dbconnect.php";
         
         require "views/_navbar.php";
     ?>
+    <div style="height: 50px;">
     <?php
         if($exist){
             echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
@@ -227,6 +276,7 @@ require "views/_dbconnect.php";
         }
 
     ?>
+    </div>
 
     
 
@@ -248,7 +298,7 @@ require "views/_dbconnect.php";
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form class="m-4" method="POST">
+      <form class="m-4" action="Admin.php" method="POST">
           <div class="mb-3">
               <label for="catname" class="form-label">Category Name</label>
               <input type="text" class="form-control" id="catname" name="catname">
@@ -287,7 +337,7 @@ require "views/_dbconnect.php";
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-                    <form class="m-4" action="<?php $_SERVER['REQUEST_URI'] ?>" method="POST">
+                    <form class="m-4" action="Admin.php" method="POST">
                         <div class="mb-3">
                             <label for="agent_name" class="form-label">Agent Name</label>
                             <input type="text" class="form-control" id="agent_name" name="agent_name">
@@ -341,7 +391,7 @@ require "views/_dbconnect.php";
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-                    <form class="m-4" action="<?php $_SERVER['REQUEST_URI'] ?>" method="POST" enctype="multipart/form-data">
+                    <form class="m-4" action="Admin.php" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="nameofowner" class="form-label">Name Of Owner</label>
                             <input type="text" class="form-control" id="nameofowner" name="nameofowner">
@@ -393,6 +443,7 @@ require "views/_dbconnect.php";
                         <div class="mb-3">
                             <label for="select" class="form-label">Select Category</label>
                             <select name="select" id="select" class="form-control">
+                                <option value=null selected>--Select Category--</option>
                                 <?php
                                         $collection = $db->categories;
                                         $category = $collection->find();
@@ -430,6 +481,7 @@ require "views/_dbconnect.php";
         <form class="m-4" action="Admin.php" method="POST">
         <label for="delete" class="form-label">Select Category</label>
         <select name="delete" id="delete" class="form-control">
+            <option value=null selected>--Select Category--</option>
             <?php
                 $collection = $db->categories;
                 $category = $collection->find();
@@ -466,6 +518,7 @@ require "views/_dbconnect.php";
         <form class="m-4" action="Admin.php" method="POST">
         <label for="deleteshop" class="form-label">Select Shopkeeper</label>
         <select name="deleteshopkeeper" id="deleteshopkeeper" class="form-control">
+            <option value=null selected>--Select Shopkeeper--</option>
             <?php
                 $collection = $db->shopkeeper;
                 $shopkeeper = $collection->find();
@@ -483,8 +536,63 @@ require "views/_dbconnect.php";
     </div>
   </div>
 </div>
+
+<!-- For Update Shopkeeper Category-->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary m-1" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#upShop">
+  Update Shopkeeper
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="upShop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="upShopLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="upShopLabel">Update Shopkeeper Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="m-4" action="Admin.php" method="POST">
+        <div class="mb-3">
+        <label for="updateshop" class="form-label">Select Shopkeeper</label>
+        <select name="updateshop" id="updateshop" class="form-control">
+            <option value=null selected>--Select Shopkeeper--</option>
+            <?php
+                $collection = $db->shopkeeper;
+                $shopkeeper = $collection->find();
+                foreach($shopkeeper as $shop){
+                    echo '<option value="'.$shop['_id'].'">'.$shop['ShopName'].'</option>';
+                }
+            ?>
+        </select>
+        </div>
+        <div class="mb-3">
+        <label for="updateshopcat" class="form-label">Select Shopkeeper</label>
+        <select name="updateshopcat" id="updateshopcat" class="form-control">
+            <option value=null selected>--Select Category--</option>
+                <?php
+                $collection = $db->categories;
+                $category = $collection->find();
+                foreach($category as $cat){
+                    echo '<option value="'.$cat['_id'].'">'.$cat['name'].'</option>';
+                }
+                ?>
+        </select>
+        </div>
+        <button type="submit" onclick="update()" name="updateshopsub" class="my-4 btn btn-primary">Update</button>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
+</div>
+</div>
+</div>
+
 <!-- Category Cropper Modal -->
 <div class="modal fade" id="catModal" tabindex="100" role="dialog" aria-labelledby="modalLabel"
                 aria-hidden="true">
@@ -518,10 +626,14 @@ require "views/_dbconnect.php";
 
 </body>
 <script>
-function getvalue() {
-    var cvalue = document.getElementsByName("select").value;
-    console.log("cvalue");
+function update() {
+    let shopcat = document.getElementById('updateshopcat').value;
+    let shop = document.getElementById('updateshop').value;
+    console.log(shop);
+    console.log(shopcat);
+    
 }
+
 $(document).ready(function() {
 
   var $modal = $('#catModal');

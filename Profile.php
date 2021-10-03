@@ -62,7 +62,7 @@
             );
             if ($update) {
                 $success = true;
-                header("location: Shopkeeper.php?shopids=$shopkeeperid");
+                // header("location: Shopkeeper.php?shopids=$shopkeeperid");
             } else {
                 $failed = true;
             }
@@ -83,10 +83,13 @@
             );
             if ($update) {
                 $success = true;
-                header("location: Shopkeeper.php?shopids=$shopkeeperid");
+                // header("location: Shopkeeper.php?shopids=$shopkeeperid");
             } else {
                 $failed = true;
             }
+        }
+        else{
+            $failed = true;
         }
     }
 
@@ -108,55 +111,56 @@
     font-family: 'Baloo Chettan 2', cursive;
     scroll-behavior: smooth;
 }
+
 .image_area {
-        position: relative;
-    }
+    position: relative;
+}
 
-    img {
-        display: block;
-        max-width: 100%;
-    }
+img {
+    display: block;
+    max-width: 100%;
+}
 
-    .preview {
-        overflow: hidden;
-        width: 160px;
-        height: 160px;
-        margin: 10px;
-        border: 1px solid red;
-    }
+.preview {
+    overflow: hidden;
+    width: 160px;
+    height: 160px;
+    margin: 10px;
+    border: 1px solid red;
+}
 
-    .modal-lg {
-        max-width: 1000px !important;
-    }
+.modal-lg {
+    max-width: 1000px !important;
+}
 
-    .overlay {
-        position: absolute;
-        bottom: 10px;
-        left: 0;
-        right: 0;
-        background-color: rgba(255, 255, 255, 0.5);
-        overflow: hidden;
-        height: 0;
-        transition: .5s ease;
-        width: 100%;
-    }
+.overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    height: 0;
+    transition: .5s ease;
+    width: 100%;
+}
 
-    .image_area:hover .overlay {
-        height: 50%;
-        cursor: pointer;
-    }
+.image_area:hover .overlay {
+    height: 50%;
+    cursor: pointer;
+}
 
-    .text {
-        color: #333;
-        font-size: 20px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        text-align: center;
-    }
+.text {
+    color: #333;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
 </style>
 
 <body>
@@ -189,73 +193,72 @@
             header("location: Login.php");
         }
     ?>
-<!-- Product Cropper Modal -->
-<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Crop Product Image</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="img-container">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <img src="" id="sample_itemimage" />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="preview"></div>
-                                    </div>
-                                </div>
+    <!-- Product Cropper Modal -->
+    <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crop Product Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="img-container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <img src="" id="sample_itemimage" />
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" id="itemCrop" class="btn btn-primary">Upload</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      
+                            <div class="col-md-4">
+                                <div class="preview"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" id="itemCrop" class="btn btn-primary">Upload</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-<!-- Profile Cropper Modal -->
-<div class="modal fade" id="proModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Crop Profile Image</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="img-container">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <img src="" id="sample_proimage" />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="preview"></div>
-                                    </div>
-                                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Cropper Modal -->
+    <div class="modal fade" id="proModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crop Profile Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="img-container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <img src="" id="sample_proimage" />
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" id="proCrop" class="btn btn-primary">Upload</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      
+                            <div class="col-md-4">
+                                <div class="preview"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="submit" id="proCrop" class="btn btn-primary">Upload</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
             </div>
+        </div>
+    </div>
 
     <div class="container" id="form">
         <div class="row">
             <!-- Insert Item form -->
             <div class="col-md-4 my-4">
-                <div class="card rounded-3">
+                <div class="card rounded-3" style="border: 2px solid grey;">
                     <h2 style="margin-top: 20px;" align="center">Add Items</h2>
-                    <form class="m-4" action="<?php "Shopkeeper.php?shopids='. $shopkeeperid .'" ?>" method="POST"  enctype="multipart/form-data" enctype="multipart/form-data">
+                    <form class="m-4" action="<?php "Shopkeeper.php?shopids='. $shopkeeperid .'" ?>" method="POST"
+                        enctype="multipart/form-data" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="itemname" class="form-label">Item Name</label>
                             <input type="text" class="form-control" id="itemname" aria-describedby="emailHelp"
@@ -275,13 +278,12 @@
             </div>
             <!-- Update Profile Pic -->
             <div class="col-md-4 my-4">
-                <div class="card rounded-3">
-                    <h2 style="margin-top: 20px;" align="center">Update Profile Pic</h2>
+                <div class="card rounded-3" style="border: 2px solid grey;">
+                    <h2 style="margin-top: 20px;" align="center">Update Profile Picture</h2>
                     <!-- action="<?php "Shopkeeper.php?shopids='. $shopkeeperid .'" ?>" -->
-                    <form class="m-4"  method="POST">
+                    <form class="m-4" method="POST">
                         <div class="res">
                             <div class="mb-3">
-                                <label for="profile" class="form-label">Update Your Profile</label>
                                 <input type="file" class="form-control" name="profile" id="profile">
                             </div>
                             <div class="mb-3">
@@ -293,7 +295,7 @@
             </div>
             <!-- Update timing of shop -->
             <div class="col-md-4 my-4">
-                <div class="card rounded-3">
+                <div class="card rounded-3" style="border: 2px solid grey;">
                     <h2 style="margin-top: 20px;" align="center">Update Shop Timing</h2>
                     <form class="m-4" action="<?php "Shopkeeper.php?shopids='. $shopkeeperid .'" ?>" method="POST">
                         <div class="mb-3">
@@ -305,7 +307,7 @@
                 </div>
             </div>
             <div class="col-md-4 my-4">
-                <div class="card rounded-3">
+                <div class="card rounded-3" style="border: 2px solid grey;">
                     <h2 style="margin-top: 20px;" align="center">Update in Maps</h2>
                     <form class="m-4" action="<?php "Shopkeeper.php?shopids='. $shopkeeperid .'" ?>" method="POST">
                         <div class="mb-3">
@@ -329,135 +331,144 @@
 // Product Cropper
 $(document).ready(function() {
 
-var $modal = $('#itemModal');
+    var $modal = $('#itemModal');
 
-var image = document.getElementById('sample_itemimage');
+    var image = document.getElementById('sample_itemimage');
 
-var cropper;
+    var cropper;
 
-$('#itempic').change(function(event) {
-    var files = event.target.files;
+    $('#itempic').change(function(event) {
+        var files = event.target.files;
 
-    var done = function(url) {
-        image.src = url;
-        $modal.modal('show');
-    };
-
-    if (files && files.length > 0) {
-        reader = new FileReader();
-        reader.onload = function(event) {
-            done(reader.result);
+        var done = function(url) {
+            image.src = url;
+            $modal.modal('show');
         };
-        reader.readAsDataURL(files[0]);
-    }
-});
 
-$modal.on('shown.bs.modal', function() {
-    cropper = new Cropper(image, {
-        aspectRatio: 16 / 9,
-        viewMode: 3,
-        preview: '.preview'
-    });
-}).on('hidden.bs.modal', function() {
-    cropper.destroy();
-    cropper = null;
-});
-
-$('#itemCrop').click(function() {
-    canvas = cropper.getCroppedCanvas({
-        width: 300,
-        height: 300
+        if (files && files.length > 0) {
+            reader = new FileReader();
+            reader.onload = function(event) {
+                done(reader.result);
+            };
+            reader.readAsDataURL(files[0]);
+        }
     });
 
-    canvas.toBlob(function(blob) {
-        url = URL.createObjectURL(blob);
-        var reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function() {
-            var base64data = reader.result;
-            var name = $("#itemname").val();
-            var desc = $("#itemdesc").val();
-            var shopids = <?php echo json_encode($shopkeeperid) ?>;
-            $.ajax({
-                url: 'upload.php',
-                method: 'POST',
-                data: {itempic: base64data, itemname: name, itemdesc: desc, shopid: shopids},
-                success: function(data) {
-                    $modal.modal('hide');
-                    window.location.reload();
-                }
-            });
-        };
+    $modal.on('shown.bs.modal', function() {
+        cropper = new Cropper(image, {
+            aspectRatio: 16 / 9,
+            viewMode: 4,
+            preview: '.preview'
+        });
+    }).on('hidden.bs.modal', function() {
+        cropper.destroy();
+        cropper = null;
     });
-});
+
+    $('#itemCrop').click(function() {
+        canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300
+        });
+
+        canvas.toBlob(function(blob) {
+            url = URL.createObjectURL(blob);
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function() {
+                var base64data = reader.result;
+                var name = $("#itemname").val();
+                var desc = $("#itemdesc").val();
+                var shopids = <?php echo json_encode($shopkeeperid) ?>;
+                $.ajax({
+                    url: 'upload.php',
+                    method: 'POST',
+                    data: {
+                        itempic: base64data,
+                        itemname: name,
+                        itemdesc: desc,
+                        shopid: shopids
+                    },
+                    success: function(data) {
+                        $modal.modal('hide');
+                        window.location.reload();
+                    }
+                });
+            };
+        });
+    });
 
 });
 
 // Profile Cropper
 $(document).ready(function() {
 
-var $modal = $('#proModal');
+    var $modal = $('#proModal');
 
-var image = document.getElementById('sample_proimage');
+    var image = document.getElementById('sample_proimage');
 
-var cropper;
+    var cropper;
 
-$('#profile').change(function(event) {
-    var files = event.target.files;
+    $('#profile').change(function(event) {
+        var files = event.target.files;
 
-    var done = function(url) {
-        image.src = url;
-        $modal.modal('show');
-    };
-
-    if (files && files.length > 0) {
-        reader = new FileReader();
-        reader.onload = function(event) {
-            done(reader.result);
+        var done = function(url) {
+            image.src = url;
+            $modal.modal('show');
         };
-        reader.readAsDataURL(files[0]);
-    }
-});
 
-$modal.on('shown.bs.modal', function() {
-    cropper = new Cropper(image, {
-        aspectRatio: 16 / 9,
-        viewMode: 3,
-        preview: '.preview'
-    });
-}).on('hidden.bs.modal', function() {
-    cropper.destroy();
-    cropper = null;
-});
-
-$('#proCrop').click(function() {
-    canvas = cropper.getCroppedCanvas({
-        width: 300,
-        height: 300
+        if (files && files.length > 0) {
+            reader = new FileReader();
+            reader.onload = function(event) {
+                done(reader.result);
+            };
+            reader.readAsDataURL(files[0]);
+        }
     });
 
-    canvas.toBlob(function(blob) {
-        url = URL.createObjectURL(blob);
-        var reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function() {
-            var base64data = reader.result;
-            var name = $("#itemname").val();
-            var desc = $("#itemdesc").val();
-            var shopids = <?php echo json_encode($shopkeeperid) ?>;
-            $.ajax({
-                url: 'upload.php',
-                method: 'POST',
-                data: {profile: base64data, shopid: shopids},
-                success: function(data) {
-                    $modal.modal('hide');
-                    window.location.reload();
-                }
-            });
-        };
+    $modal.on('shown.bs.modal', function() {
+        cropper = new Cropper(image, {
+            aspectRatio: 16 / 9,
+            viewMode: 3,
+            preview: '.preview'
+        });
+    }).on('hidden.bs.modal', function() {
+        cropper.destroy();
+        cropper = null;
     });
-});
+
+    $('#proCrop').click(function() {
+        canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300
+        });
+
+        canvas.toBlob(function(blob) {
+            url = URL.createObjectURL(blob);
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function() {
+                var base64data = reader.result;
+                var name = $("#itemname").val();
+                var desc = $("#itemdesc").val();
+                var shopids = <?php echo json_encode($shopkeeperid) ?>;
+                $.ajax({
+                    url: 'upload.php',
+                    method: 'POST',
+                    data: {
+                        profile: base64data,
+                        shopid: shopids
+                    },
+                    success: function(data) {
+                        $modal.modal('hide');
+                        window.location.reload();
+                    }
+                });
+            };
+        });
+    });
 
 });
 </script>
+
 </html>

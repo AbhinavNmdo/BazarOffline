@@ -12,10 +12,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>Welcome</title>
-    <link rel="stylesheet" href="views/_Welcomestyle.css">
+    <link rel="stylesheet" href="views/Welcomestyle.css">
     <link rel="stylesheet" media="screen and (max-width: 1100px)" href="views/_phonestyle.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="css/hover-min.css" rel="stylesheet">
 </head>
 <style>
 .div {
@@ -50,6 +52,12 @@
     padding: 20px;
 
 }
+.button{
+    padding: 8px;
+    background-color: blue;
+    border-radius: 15px;
+    text-decoration: none;
+}
 </style>
 
 <body onload="loadingfunc()">
@@ -67,11 +75,12 @@
         require 'views/_navbar.php';
     ?>
     <div id="header">
-        <div id="header2">
-            <h2 class="bazar">Welcome to BazarOffline</h2>
-            <p class="bazar2">You can find shops and products near you.</p>
+        <div id="header2" data-aos="fade-right" data-aos-duration="900">
+            <h2>Welcome to <strong id="title" style="font-size: 3rem;"> BazarOffline</strong></h2>
+            <p>You can find shops and products near you.</p>
         </div>
     </div>
+    
 
     <div id="heading1">
         <h2>Categories</h2>
@@ -86,18 +95,19 @@
                     foreach($category as $cat){
                         $data = base64_encode($cat->image->getData());
                         $desc = $cat['description'];
-                        echo '<div class="col-md-4">
+                        echo '<div class="col-md-4" data-aos="zoom-in" data-aos-offset="130">
                         <div class="row-md-4 m-4">
                         <div class="card" style="height: auto; border-radius: 15px;">
                             <img class="card-img-top" src="data:jpeg;base64,'. $data .'" alt="Oops" style="border-radius: 15px;" id="catImage">
                             <div class="card-body">
-                                <h5 class="card-title">'. $cat['name'] . '</h5>
-                                <p class="card-text">' . substr($desc, 0, 90) . '...</p>
-                                <a href="Categories.php?catid=' . $cat['_id'] . '" class="btn btn-primary">View ' . $cat['name'] . '</a>
+                                <h5 align="center" class="card-title">'. $cat['name'] . '</h5>
+                                <!-- <p class="card-text">' . substr($desc, 0, 90) . '...</p> -->
+                                <a href="Categories.php?catid=' . $cat['_id'] . '" class="stretched-link"></a>
                             </div>
                         </div>
                     </div>
-                    </div>';
+                    </div>
+                    ';
                     }
                 ?>
         </div>
@@ -163,5 +173,10 @@ function error() {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
 </script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
 
 </html>

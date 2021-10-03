@@ -14,6 +14,7 @@
     <title>Categories</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <style>
     *
@@ -58,7 +59,7 @@
                         $data = base64_encode($shop->Image->getData());
                         echo '<div class="col-md-4">
                         <div class="row-md-4 m-4">
-                        <div class="card" style="height: auto; border-radius: 15px;">
+                        <div class="card" style="height: auto; border-radius: 15px;" data-aos="zoom-in" data-aos-offset="130">
                             <img src="data:jpeg;base64,'. $data .'" class="card-img-top" alt="Oops" style="border-radius: 15px;">
                             <div class="card-body">
                                 <h5 class="card-title">'. $shop['ShopName'] . '</h5>
@@ -80,5 +81,9 @@
         ?>
     </div>
 </body>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
 
 </html>

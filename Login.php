@@ -1,5 +1,5 @@
 <?php
-    $login = false;
+    $fill = false;
     $err = false;
     $emailnotexist = false;
     $adminlogin = false;
@@ -10,33 +10,44 @@
         if(!empty($username and !empty($password))){
             $collection = $db->shopkeeper;
             $check = $collection->findOne(['Username' => $username]);
-            if($check['Password'] == $password){
-                $login = true;
-                session_start();
-                $shopid = $check['_id'];
-                $ownername = $check['OwnerName'];
-                $_SESSION['ownername'] = $check['OwnerName'];
-                $_SESSION['shopzip'] = $check['Zip'];
-                $_SESSION['shopid'] = $shopid;
-                $_SESSION['username'] = $check['Username'];
-                $_SESSION['loggedin'] = true;
-                header("location: Shopkeeper.php?shopids=$shopid");
+            if($check){
+                if($check['Password'] == $password){
+                    $login = true;
+                    session_start();
+                    $shopid = $check['_id'];
+                    $ownername = $check['OwnerName'];
+                    $_SESSION['ownername'] = $check['OwnerName'];
+                    $_SESSION['shopzip'] = $check['Zip'];
+                    $_SESSION['shopid'] = $shopid;
+                    $_SESSION['username'] = $check['Username'];
+                    $_SESSION['loggedin'] = true;
+                    header("location: Shopkeeper.php?shopids=$shopid");
+                }
+                
+                else{
+                    $err = true;
+                }
             }
-            else if(isset($_POST['login'])){
-                    $username = $_POST['username'];
-                    $password = $_POST['password'];
-                    if($username == "admin1122"){
-                        if($password == "admin1122"){
-                            session_start();
-                            $adminlogin = true;
-                            $_SESSION['admin'] = true;
-                            header("location: Admin.php");
-                        }
+            else {
+                $emailnotexist = true;
+            }
+            
+            if(isset($_POST['login'])){
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                if($username == "admin1122"){
+                    if($password == "admin1122"){
+                        session_start();
+                        $adminlogin = true;
+                        $_SESSION['admin'] = true;
+                        header("location: Admin.php");
                     }
+                }
             }
-            else{
-                $err = true;
-            }
+            
+        }
+        else {
+            $fill = true;
         }
     }
 ?>
@@ -69,16 +80,17 @@
     <?php
         require 'views/_navbar.php';
     ?>
+    <div style="height: 50px">
     <?php
-        if ($login) {
-            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-            <strong>Loggid in Successfully!</strong>
+        if ($fill) {
+            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+            <strong>Please Fill Details</strong>
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
           </div>";
         }
         if ($err) {
             echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-            <strong>Incorrect Password!</strong>
+            <strong>Password Incorrect</strong>
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
           </div>";
         }
@@ -90,6 +102,7 @@
         }
 
     ?>
+    </div>
     <h1 align="center" class="my-4">Login Here</h1>
     <div class="container my-4" id="div">
         <form action="Login.php" method="post">

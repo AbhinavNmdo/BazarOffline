@@ -10,14 +10,17 @@
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 
     <title>Footer</title>
+    <style>
+        *{
+            padding: 0%;
+            margin: 0%;
+
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-
-        <br>
-        <br>
-        <br>
         <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">

@@ -13,6 +13,7 @@ $id = $_GET['shopids'];
     <title>Shopkeeper</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
     *
     {
@@ -93,7 +94,7 @@ $id = $_GET['shopids'];
             foreach($items as $item){
                 $desc = $item['description'];
                 $data = base64_encode($item->image->getData());
-                echo '<div class="col-md-4">
+                echo '<div class="col-md-4" data-aos="zoom-in" data-aos-offset="130">
                     <div class="row-md-4 m-4">
                     <div class="card" style="height: auto; border-radius: 15px;">
                         <img src="data:jpeg;base64,'. $data .'" class="card-img-top" alt="..." style="border-radius: 15px;">
@@ -119,5 +120,9 @@ $id = $_GET['shopids'];
         ?>
     </div>
 </body>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
 
 </html>
